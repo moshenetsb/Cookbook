@@ -3,10 +3,9 @@
 Zdjęcia są lokalnymi zasobami aplikacji. Aplikacja nie pobiera ich podczas uruchamiania.
 Kopie używane w aplikacji znajdują się w `CookBook/Assets.xcassets`; ten folder ułatwia przeglądanie i podmianę.
 
-## Projekt Figma użytkownika
+## Projekt Figma 
 
 `cookbook_logo.png`, `recipe_orzo.png`, `recipe_salmon.png`, `recipe_chickpea.png` pobrano z [projektu CookBook](https://www.figma.com/design/vgZWh2beTDXL7IzFBNNiK3/CookBook?node-id=88-30).
-Pliki zachowują grafikę z makiety. Informacje o pierwotnych autorach tych czterech zasobów nie były podane w odczycie Figmy.
 
 ## Pexels
 
@@ -29,4 +28,3 @@ Fotografie ilustrują dania; szczegóły dekoracji mogą różnić się od recep
 | recipe_tofu_stirfry.jpg | CX LEE | [Tofu z warzywami](https://www.pexels.com/photo/delicious-crispy-tofu-with-fresh-vegetables-36120987/) |
 | recipe_apple_crumble.jpg | Valeria Boltneva | [Jabłkowa kruszonka](https://www.pexels.com/photo/closeup-of-an-apple-crumble-on-a-plate-9266852/) |
 
-Weryfikacja źródeł: 12 listopada 2026.
