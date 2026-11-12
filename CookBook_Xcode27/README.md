@@ -32,7 +32,6 @@ Osoba odpowiedzialna za bazę powinna zacząć od [instrukcji integracji](Docs/I
 ## Pliki do nauki i dalszej pracy
 
 - [Opis struktury projektu i mapa kodu](Docs/STRUKTURA_PROJEKTU.md) — artefakt etapu 2 i miejsca implementacji.
-- [Weryfikacja i sprawdzenie na Macu](Docs/WERYFIKACJA.md) — wykonane kontrole, ograniczenia i scenariusze ręczne.
 - [Źródła zdjęć](RecipePhotos/SOURCES.md) — autorzy i strony źródłowe.
 - `RecipePhotos/` — osobny folder ze zdjęciami, a `CookBook/Assets.xcassets/` — ich kopie używane przez aplikację.
 - `Archiwum/Kod_Xcode16/` — niezmieniony kod sprzed przebudowy, zachowany na pulpicie poza targetem aplikacji.
