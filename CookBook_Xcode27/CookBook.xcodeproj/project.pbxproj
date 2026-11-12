@@ -1,0 +1,622 @@
+// !$*UTF8*$!
+{
+	"archiveVersion" = "1";
+	"classes" = {
+	};
+	"objectVersion" = "56";
+	"objects" = {
+		"11275E9674CEF93604E8BC0C" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ContentView.swift";
+			"sourceTree" = "<group>";
+		};
+		"4CB25BCB00970BA7D42CD819" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "11275E9674CEF93604E8BC0C";
+		};
+		"CE2198E560D8DEF1DDFE17B7" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "CookBookApp.swift";
+			"sourceTree" = "<group>";
+		};
+		"1B13A82F56A897CDC449CB8B" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "CE2198E560D8DEF1DDFE17B7";
+		};
+		"73D3F45A16237816042D5DEB" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeStore.swift";
+			"sourceTree" = "<group>";
+		};
+		"0C8836739FDFAF7F89506E24" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "73D3F45A16237816042D5DEB";
+		};
+		"13C4608B5138EBE9B3A45A55" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"11275E9674CEF93604E8BC0C",
+				"CE2198E560D8DEF1DDFE17B7",
+				"73D3F45A16237816042D5DEB",
+			);
+			"path" = "App";
+			"sourceTree" = "<group>";
+		};
+		"D612DE500F3EA1F5813B190F" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "Recipe.swift";
+			"sourceTree" = "<group>";
+		};
+		"52C5384497B9C53FC295B285" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "D612DE500F3EA1F5813B190F";
+		};
+		"A1F622DCBBC36E0FDFAFCA1C" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeDraft.swift";
+			"sourceTree" = "<group>";
+		};
+		"94E812BA3CAA4133A78035A9" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A1F622DCBBC36E0FDFAFCA1C";
+		};
+		"200236936AD5F0B30F8EAF15" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeFilter.swift";
+			"sourceTree" = "<group>";
+		};
+		"31C026B50399D4528E59909B" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "200236936AD5F0B30F8EAF15";
+		};
+		"751866F3D6D18B5CB0C486C7" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeRepository.swift";
+			"sourceTree" = "<group>";
+		};
+		"1B85D40CA9197734E64839C6" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "751866F3D6D18B5CB0C486C7";
+		};
+		"32E3F3BF865D9CE5A54D43B0" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "SampleRecipes.swift";
+			"sourceTree" = "<group>";
+		};
+		"86393F4C1C764CE475E406B0" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "32E3F3BF865D9CE5A54D43B0";
+		};
+		"2BA340BF271E1A0E2D6B10FC" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"D612DE500F3EA1F5813B190F",
+				"A1F622DCBBC36E0FDFAFCA1C",
+				"200236936AD5F0B30F8EAF15",
+				"751866F3D6D18B5CB0C486C7",
+				"32E3F3BF865D9CE5A54D43B0",
+			);
+			"path" = "Core";
+			"sourceTree" = "<group>";
+		};
+		"EF06F5AC255AE6CCF89CD6B6" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "AppTheme.swift";
+			"sourceTree" = "<group>";
+		};
+		"2EEEB4BD9D492F11C7CD81E3" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "EF06F5AC255AE6CCF89CD6B6";
+		};
+		"9F076856266708507FD3FAAF" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeComponents.swift";
+			"sourceTree" = "<group>";
+		};
+		"AD151B9CF5888CB820608C8B" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "9F076856266708507FD3FAAF";
+		};
+		"C7563194586BC858E2FCBF10" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"EF06F5AC255AE6CCF89CD6B6",
+				"9F076856266708507FD3FAAF",
+			);
+			"path" = "Components";
+			"sourceTree" = "<group>";
+		};
+		"A825DFC8E2D7926B8FD3A2F4" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "CookingView.swift";
+			"sourceTree" = "<group>";
+		};
+		"335A241D0E276F8B41A7F10E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A825DFC8E2D7926B8FD3A2F4";
+		};
+		"822F667AF113467BFA505AD2" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "FavoritesView.swift";
+			"sourceTree" = "<group>";
+		};
+		"D009B8C4A00356DBFB425FBB" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "822F667AF113467BFA505AD2";
+		};
+		"03DE957BF5EE0273C679313D" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "HomeView.swift";
+			"sourceTree" = "<group>";
+		};
+		"8855F2C67B685F973EC9CB93" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "03DE957BF5EE0273C679313D";
+		};
+		"96D58442C92D7B5890BA0385" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "MediaPlayerView.swift";
+			"sourceTree" = "<group>";
+		};
+		"9F812822FE91969585671A7F" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "96D58442C92D7B5890BA0385";
+		};
+		"73FCD3AD288D91F57B3178E6" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeDetailView.swift";
+			"sourceTree" = "<group>";
+		};
+		"0CAE2BD6BAD2760B74BDB5FA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "73FCD3AD288D91F57B3178E6";
+		};
+		"F80323F02F3B75AAAA1A7480" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "RecipeFormView.swift";
+			"sourceTree" = "<group>";
+		};
+		"BD945469B81F2DEE49930AAA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F80323F02F3B75AAAA1A7480";
+		};
+		"4CB62536DE3949BAEAE7F1F2" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "SearchView.swift";
+			"sourceTree" = "<group>";
+		};
+		"934B89F25E9AFFA55C185A4E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "4CB62536DE3949BAEAE7F1F2";
+		};
+		"F3B33C868A57D1FD49EFCA57" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "SettingsView.swift";
+			"sourceTree" = "<group>";
+		};
+		"24D42D59338A25FC07C0B2FD" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F3B33C868A57D1FD49EFCA57";
+		};
+		"E64DA6756D6CF253E6CA6FFA" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"A825DFC8E2D7926B8FD3A2F4",
+				"822F667AF113467BFA505AD2",
+				"03DE957BF5EE0273C679313D",
+				"96D58442C92D7B5890BA0385",
+				"73FCD3AD288D91F57B3178E6",
+				"F80323F02F3B75AAAA1A7480",
+				"4CB62536DE3949BAEAE7F1F2",
+				"F3B33C868A57D1FD49EFCA57",
+			);
+			"path" = "Features";
+			"sourceTree" = "<group>";
+		};
+		"887638CF05825D03EB921ACF" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "MediaImporter.swift";
+			"sourceTree" = "<group>";
+		};
+		"6541BD71CF38FC80299C47FD" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "887638CF05825D03EB921ACF";
+		};
+		"6B8B2B5CD808F874BF4EE1BA" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"887638CF05825D03EB921ACF",
+			);
+			"path" = "Services";
+			"sourceTree" = "<group>";
+		};
+		"ED01CFA406ED1520C0F2471A" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder.assetcatalog";
+			"path" = "Assets.xcassets";
+			"sourceTree" = "<group>";
+		};
+		"435FBFCAB60887F0E7F435E0" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text.plist.xml";
+			"path" = "Info.plist";
+			"sourceTree" = "<group>";
+		};
+		"085ED06E573690BA3A56BC1E" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"13C4608B5138EBE9B3A45A55",
+				"2BA340BF271E1A0E2D6B10FC",
+				"C7563194586BC858E2FCBF10",
+				"E64DA6756D6CF253E6CA6FFA",
+				"6B8B2B5CD808F874BF4EE1BA",
+				"ED01CFA406ED1520C0F2471A",
+				"435FBFCAB60887F0E7F435E0",
+			);
+			"path" = "CookBook";
+			"sourceTree" = "<group>";
+		};
+		"0D6B6C15C076A6BD18AF6690" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "CookBookCoreTests.swift";
+			"sourceTree" = "<group>";
+		};
+		"D60409337774CCE94860379A" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"0D6B6C15C076A6BD18AF6690",
+			);
+			"path" = "Tests";
+			"sourceTree" = "<group>";
+		};
+		"81F31879437340D5CD6ED968" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.application";
+			"includeInIndex" = "0";
+			"path" = "CookBook.app";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"70F09BF32F6D77A92FF191B4" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.cfbundle";
+			"includeInIndex" = "0";
+			"path" = "CookBookTests.xctest";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"6F7199ED7B63CDA338A0FB82" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"81F31879437340D5CD6ED968",
+				"70F09BF32F6D77A92FF191B4",
+			);
+			"name" = "Products";
+			"sourceTree" = "<group>";
+		};
+		"CC5D242D023A9271190EA7C6" = {
+			"isa" = "PBXGroup";
+			"children" = (
+				"085ED06E573690BA3A56BC1E",
+				"D60409337774CCE94860379A",
+				"6F7199ED7B63CDA338A0FB82",
+			);
+			"sourceTree" = "<group>";
+		};
+		"6ACE7BC297BF23705D4E5F56" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"4CB25BCB00970BA7D42CD819",
+				"1B13A82F56A897CDC449CB8B",
+				"0C8836739FDFAF7F89506E24",
+				"52C5384497B9C53FC295B285",
+				"94E812BA3CAA4133A78035A9",
+				"31C026B50399D4528E59909B",
+				"1B85D40CA9197734E64839C6",
+				"86393F4C1C764CE475E406B0",
+				"2EEEB4BD9D492F11C7CD81E3",
+				"AD151B9CF5888CB820608C8B",
+				"335A241D0E276F8B41A7F10E",
+				"D009B8C4A00356DBFB425FBB",
+				"8855F2C67B685F973EC9CB93",
+				"9F812822FE91969585671A7F",
+				"0CAE2BD6BAD2760B74BDB5FA",
+				"BD945469B81F2DEE49930AAA",
+				"934B89F25E9AFFA55C185A4E",
+				"24D42D59338A25FC07C0B2FD",
+				"6541BD71CF38FC80299C47FD",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"999FF37E9C5A0FFB78E1CDE2" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "ED01CFA406ED1520C0F2471A";
+		};
+		"EB12F685944315C425ABFF58" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"999FF37E9C5A0FFB78E1CDE2",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"13D58F750C9F7A867F986420" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"1CFC5B933DFD430877F401EA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "0D6B6C15C076A6BD18AF6690";
+		};
+		"DE2F315977E833CC2ECF764D" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"1CFC5B933DFD430877F401EA",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"09701C1ED473FC02B8A57D80" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"FDD3EA28A0B1309668A442B2" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_ENABLE_MODULES" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"CLANG_WARN_DOCUMENTATION_COMMENTS" = "YES";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu17";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"SDKROOT" = "iphoneos";
+				"SWIFT_VERSION" = "6.0";
+				"SWIFT_STRICT_CONCURRENCY" = "complete";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"ENABLE_TESTABILITY" = "YES";
+				"ONLY_ACTIVE_ARCH" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
+			};
+			"name" = "Debug";
+		};
+		"8DB23D5B0AA80A48AA651830" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_ENABLE_MODULES" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"CLANG_WARN_DOCUMENTATION_COMMENTS" = "YES";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu17";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"SDKROOT" = "iphoneos";
+				"SWIFT_VERSION" = "6.0";
+				"SWIFT_STRICT_CONCURRENCY" = "complete";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"ENABLE_TESTABILITY" = "NO";
+				"ONLY_ACTIVE_ARCH" = "NO";
+				"SWIFT_COMPILATION_MODE" = "wholemodule";
+			};
+			"name" = "Release";
+		};
+		"1922B098E983995960BE56B0" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"FDD3EA28A0B1309668A442B2",
+				"8DB23D5B0AA80A48AA651830",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		"AB00255049ED0D95F2F0606D" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "pl.edu.cookbook.student";
+				"MARKETING_VERSION" = "1.0";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "CookBook/Info.plist";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SUPPORTS_MACCATALYST" = "NO";
+				"SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" = "NO";
+				"ENABLE_PREVIEWS" = "YES";
+				"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME" = "AccentColor";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LOCALIZATION_PREFERS_STRING_CATALOGS" = "YES";
+			};
+			"name" = "Debug";
+		};
+		"D4A96B521F3D78469F32E0BE" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "pl.edu.cookbook.student";
+				"MARKETING_VERSION" = "1.0";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "CookBook/Info.plist";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SUPPORTS_MACCATALYST" = "NO";
+				"SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" = "NO";
+				"ENABLE_PREVIEWS" = "YES";
+				"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME" = "AccentColor";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LOCALIZATION_PREFERS_STRING_CATALOGS" = "YES";
+			};
+			"name" = "Release";
+		};
+		"7FA7C6DD60DC323C7F3FA76C" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AB00255049ED0D95F2F0606D",
+				"D4A96B521F3D78469F32E0BE",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		"061531FC454E83EE1C78D4F1" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "pl.edu.cookbook.student.tests";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"BUNDLE_LOADER" = "$(TEST_HOST)";
+				"TEST_HOST" = "$(BUILT_PRODUCTS_DIR)/CookBook.app/CookBook";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+			};
+			"name" = "Debug";
+		};
+		"C07D30961C90BC4ACFC24C24" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "pl.edu.cookbook.student.tests";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"BUNDLE_LOADER" = "$(TEST_HOST)";
+				"TEST_HOST" = "$(BUILT_PRODUCTS_DIR)/CookBook.app/CookBook";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+			};
+			"name" = "Release";
+		};
+		"3AC24B37B5C6634D049790CE" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"061531FC454E83EE1C78D4F1",
+				"C07D30961C90BC4ACFC24C24",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		"8C1A045E96B998B40533C7FF" = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "7FA7C6DD60DC323C7F3FA76C";
+			"buildPhases" = (
+				"6ACE7BC297BF23705D4E5F56",
+				"13D58F750C9F7A867F986420",
+				"EB12F685944315C425ABFF58",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"name" = "CookBook";
+			"productName" = "CookBook";
+			"productReference" = "81F31879437340D5CD6ED968";
+			"productType" = "com.apple.product-type.application";
+		};
+		"6605C10F6C8F6BC76033835A" = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "244210E48437B6556980A702";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "8C1A045E96B998B40533C7FF";
+			"remoteInfo" = "CookBook";
+		};
+		"60356F681D31A06D546741DC" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "8C1A045E96B998B40533C7FF";
+			"targetProxy" = "6605C10F6C8F6BC76033835A";
+		};
+		"2ADDEE89B29C55E11126D89F" = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "3AC24B37B5C6634D049790CE";
+			"buildPhases" = (
+				"DE2F315977E833CC2ECF764D",
+				"09701C1ED473FC02B8A57D80",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+				"60356F681D31A06D546741DC",
+			);
+			"name" = "CookBookTests";
+			"productName" = "CookBookTests";
+			"productReference" = "70F09BF32F6D77A92FF191B4";
+			"productType" = "com.apple.product-type.bundle.unit-test";
+		};
+		"244210E48437B6556980A702" = {
+			"isa" = "PBXProject";
+			"attributes" = {
+				"BuildIndependentTargetsInParallel" = "YES";
+				"TargetAttributes" = {
+					"8C1A045E96B998B40533C7FF" = {
+						"ProvisioningStyle" = "Automatic";
+					};
+					"2ADDEE89B29C55E11126D89F" = {
+						"TestTargetID" = "8C1A045E96B998B40533C7FF";
+					};
+				};
+			};
+			"buildConfigurationList" = "1922B098E983995960BE56B0";
+			"compatibilityVersion" = "Xcode 14.0";
+			"developmentRegion" = "pl";
+			"hasScannedForEncodings" = "0";
+			"knownRegions" = (
+				"pl",
+				"en",
+				"Base",
+			);
+			"mainGroup" = "CC5D242D023A9271190EA7C6";
+			"productRefGroup" = "6F7199ED7B63CDA338A0FB82";
+			"projectDirPath" = "";
+			"projectRoot" = "";
+			"targets" = (
+				"8C1A045E96B998B40533C7FF",
+				"2ADDEE89B29C55E11126D89F",
+			);
+		};
+	};
+	"rootObject" = "244210E48437B6556980A702";
+}
