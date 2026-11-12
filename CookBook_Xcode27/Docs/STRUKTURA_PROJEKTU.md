@@ -88,4 +88,3 @@ Kod aktualizujący wspólny stan pracuje na `MainActor`. Kopiowanie większego p
 Zachowano zielony akcent, miętowe powierzchnie, jasne tło, zaokrąglone zdjęcia, układ zakładek i nazwy akcji.
 SF Pro zastępuje Inter zgodnie z decyzją użytkownika. Natywne `NavigationStack`, `TabView`, `List`, `Form`, selektory i arkusze obsługują nawigację, przewijanie oraz wielkość tekstu. Nie odtwarzano sztucznego paska statusu ani Dynamic Island z makiety.
 
-Nie wykonano jeszcze porównania renderowania SwiftUI z Figmą na iOS. Sprawdzenie wizualne i interakcyjne jest opisane w [dokumencie weryfikacji](WERYFIKACJA.md).
