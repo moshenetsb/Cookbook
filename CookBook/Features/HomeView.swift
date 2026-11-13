@@ -22,17 +22,6 @@ struct HomeView: View {
                         Text("Co dziś ugotujemy?").font(.title.bold()).foregroundStyle(AppTheme.ink)
                         Text("Sprawdzone przepisy na każdy dzień").font(.subheadline).foregroundStyle(AppTheme.muted)
                     }
-                    Button { onSearch(RecipeFilter()) } label: {
-                        Label("Znajdź swoje następne danie", systemImage: "magnifyingglass")
-                            .font(.subheadline).foregroundStyle(AppTheme.muted)
-                            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-                            .padding(.horizontal, 14)
-                            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 14))
-                            .overlay(RoundedRectangle(cornerRadius: 14).stroke(AppTheme.border))
-                    }
-                    .buttonStyle(.plain)
-                    Button("Dla Ciebie") { onSearch(RecipeFilter()) }
-                        .buttonStyle(PrimaryButtonStyle())
 
                     if let featured {
                         NavigationLink { RecipeDetailView(recipeID: featured.id) } label: {
