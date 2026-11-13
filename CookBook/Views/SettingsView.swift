@@ -1,13 +1,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("defaultServings") private var defaultServings = 2
-
+    @AppStorage("defaultServings") private var defaultServings = 1
+    
     var body: some View {
         NavigationStack {
             Form {
-                Text("Dostosuj CookBook do swoich potrzeb").font(.subheadline).foregroundStyle(.secondary)
-                    .listRowBackground(Color.clear)
                 Section {
                     HStack(spacing: 12) {
                         Text("M").font(.headline).foregroundStyle(AppTheme.green)
@@ -24,23 +22,54 @@ struct SettingsView: View {
                     LabeledContent("iCloud", value: "Niedostępne").foregroundStyle(.secondary)
                 } header: {
                     Text("Przechowywanie danych")
-                } footer: {
-                    Text("Zmiany przepisów i ulubionych są dostępne do ponownego uruchomienia aplikacji.")
                 }
-
+                
                 Section {
-                    Stepper("Domyślne porcje: \(defaultServings)", value: $defaultServings, in: 1...12)
-                    LabeledContent("Powiadomienia", value: "Niedostępne").foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Domyślne porcje")
+
+                            Spacer()
+
+                            Button {
+                                defaultServings = max(1, defaultServings - 1)
+                            } label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .font(.title2)
+                                    .foregroundStyle(AppTheme.green)
+                            }
+
+                            Text("\(defaultServings)")
+                                .id(defaultServings)
+                                .font(.headline)
+                                .monospacedDigit()
+                                .frame(width: 25)
+
+                            Button {
+                                defaultServings = min(12, defaultServings + 1)
+                            } label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.title2)
+                                    .foregroundStyle(AppTheme.green)
+                            }
+                        }
+
+                        Text("Domyślna liczba porcji jest używana przy tworzeniu nowego przepisu.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    LabeledContent("Powiadomienia", value: "Niedostępne")
+                        .foregroundStyle(.secondary)
+
                 } header: {
                     Text("Preferencje")
-                } footer: {
-                    Text("Domyślna liczba porcji jest używana przy tworzeniu nowego przepisu.")
                 }
-
+                
                 Section("O aplikacji") {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("CookBook · Wersja 1.0").font(.subheadline.bold()).foregroundStyle(AppTheme.green)
-                        Text("Gotuj krok po kroku i korzystaj z wygodnej listy składników.").font(.subheadline)
+                        Text("Gotuj krok po kroku i korzystaj z wygodnej listy składników").font(.subheadline)
                         Text("Twoje przepisy zawsze pod ręką").font(.caption).foregroundStyle(AppTheme.green)
                     }
                     .padding(.vertical, 8)
