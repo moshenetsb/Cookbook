@@ -49,6 +49,69 @@ struct StepDraft: Identifiable, Equatable, Sendable {
     var isEmpty: Bool { title.trimmed.isEmpty && instruction.trimmed.isEmpty }
 }
 
+enum RecipeValidationIssue: Equatable {
+    case titleRequired
+    case invalidPreparationTime
+    case invalidServings
+    case ingredientsRequired
+    case ingredientNameRequired
+    case invalidIngredientQuantity
+    case stepsRequired
+    case stepInstructionRequired
+
+    var message: String {
+        switch self {
+        case .titleRequired:
+            return "Podaj nazwę przepisu"
+        case .invalidPreparationTime:
+            return "Czas musi być liczbą od 1 do 1440 minut"
+        case .invalidServings:
+            return "Liczba porcji musi wynosić od 1 do 100"
+        case .ingredientsRequired:
+            return "Dodaj przynajmniej jeden składnik."
+        case .ingredientNameRequired:
+            return "Podaj nazwę składnika."
+        case .invalidIngredientQuantity:
+            return "Podaj poprawną ilość, np. 250 g lub do smaku"
+        case .stepsRequired:
+            return "Dodaj przynajmniej jeden krok przygotowania"
+        case .stepInstructionRequired:
+            return "Opisz ten krok przygotowania"
+        }
+    }
+}
+
+struct IngredientFieldValidation: Equatable {
+    var name: RecipeValidationIssue? = nil
+    var quantity: RecipeValidationIssue? = nil
+
+    var isValid: Bool { name == nil && quantity == nil }
+}
+
+struct RecipeValidation: Error, Equatable {
+    var title: RecipeValidationIssue? = nil
+    var preparationTime: Int? = nil
+    var preparationTimeIssue: RecipeValidationIssue? = nil
+    var servingCount: Int? = nil
+    var servingCountIssue: RecipeValidationIssue? = nil
+    var ingredientsIssue: RecipeValidationIssue? = nil
+    var ingredientFields: [UUID: IngredientFieldValidation] = [:]
+    var stepsIssue: RecipeValidationIssue? = nil
+    var stepFields: [UUID: RecipeValidationIssue] = [:]
+
+    var isValid: Bool {
+        title == nil
+            && preparationTime != nil
+            && preparationTimeIssue == nil
+            && servingCount != nil
+            && servingCountIssue == nil
+            && ingredientsIssue == nil
+            && ingredientFields.values.allSatisfy(\.isValid)
+            && stepsIssue == nil
+            && stepFields.isEmpty
+    }
+}
+
 struct RecipeDraft: Equatable {
     var original: Recipe?
     var title = ""
@@ -103,41 +166,83 @@ struct RecipeDraft: Equatable {
         audio = recipe.audio
     }
 
-    var validationMessages: [String] {
-        var messages: [String] = []
-        if title.trimmed.isEmpty { messages.append("Podaj nazwę przepisu.") }
-        if !(1...1440).contains(Int(time.trimmed) ?? 0) {
-            messages.append("Czas musi być liczbą od 1 do 1440 minut.")
+    func validate() -> RecipeValidation {
+        var validation = RecipeValidation()
+        if title.trimmed.isEmpty {
+            validation.title = .titleRequired
         }
-        if !(1...100).contains(Int(servings.trimmed) ?? 0) {
-            messages.append("Liczba porcji musi wynosić od 1 do 100.")
+
+        if let minutes = Int(time.trimmed), (1...1440).contains(minutes) {
+            validation.preparationTime = minutes
+        } else {
+            validation.preparationTimeIssue = .invalidPreparationTime
         }
+
+        if let portions = Int(servings.trimmed), (1...100).contains(portions) {
+            validation.servingCount = portions
+        } else {
+            validation.servingCountIssue = .invalidServings
+        }
+
         let enteredIngredients = ingredients.filter { !$0.isEmpty }
         if enteredIngredients.isEmpty {
-            messages.append("Dodaj przynajmniej jeden składnik i jego ilość.")
-        } else if enteredIngredients.contains(where: { $0.makeIngredient() == nil }) {
-            messages.append("Uzupełnij nazwę i poprawną ilość każdego składnika, np. 250 g lub do smaku.")
+            validation.ingredientsIssue = .ingredientsRequired
+        } else {
+            for ingredient in enteredIngredients {
+                var fields = IngredientFieldValidation()
+                if ingredient.name.trimmed.isEmpty {
+                    fields.name = .ingredientNameRequired
+                }
+                if IngredientDraft.parseQuantity(ingredient.quantity) == nil {
+                    fields.quantity = .invalidIngredientQuantity
+                }
+                if !fields.isValid {
+                    validation.ingredientFields[ingredient.id] = fields
+                }
+            }
         }
+
         let enteredSteps = steps.filter { !$0.isEmpty }
-        if enteredSteps.isEmpty || enteredSteps.contains(where: { $0.instruction.trimmed.isEmpty }) {
-            messages.append("Dodaj opis każdego kroku przygotowania.")
+        if enteredSteps.isEmpty {
+            validation.stepsIssue = .stepsRequired
+        } else {
+            for step in enteredSteps where step.instruction.trimmed.isEmpty {
+                validation.stepFields[step.id] = .stepInstructionRequired
+            }
         }
-        return messages
+
+        return validation
     }
 
-    func makeRecipe() -> Recipe? {
-        guard validationMessages.isEmpty,
-              let minutes = Int(time.trimmed), let portions = Int(servings.trimmed) else { return nil }
+    func makeRecipe() -> Result<Recipe, RecipeValidation> {
+        let validation = validate()
+        guard validation.isValid,
+              let minutes = validation.preparationTime,
+              let portions = validation.servingCount else {
+            return .failure(validation)
+        }
+
         let preparation = steps.filter { !$0.isEmpty }.enumerated().map { index, step in
             PreparationStep(step.title.trimmed.isEmpty ? "Krok \(index + 1)" : step.title.trimmed, step.instruction.trimmed)
         }
-        return Recipe(
-            id: original?.id ?? UUID(), title: title.trimmed, summary: summary.trimmed,
-            category: category, diet: diet, preparationTime: minutes, difficulty: difficulty,
-            servings: portions, ingredients: ingredients.compactMap { $0.makeIngredient() },
-            steps: preparation, imageName: imageName, imageData: imageData,
+        let recipe = Recipe(
+            id: original?.id ?? UUID(), 
+            title: title.trimmed, 
+            summary: summary.trimmed,
+            category: category, 
+            diet: diet, 
+            preparationTime: minutes, 
+            difficulty: difficulty,
+            servings: portions, 
+            ingredients: ingredients.compactMap { $0.makeIngredient() },
+            steps: preparation, 
+            imageName: imageName, 
+            imageData: imageData,
             isFavorite: original?.isFavorite ?? false,
-            createdAt: original?.createdAt ?? .now, video: video, audio: audio
+            createdAt: original?.createdAt ?? .now, 
+            video: video, 
+            audio: audio
         )
+        return .success(recipe)
     }
 }
