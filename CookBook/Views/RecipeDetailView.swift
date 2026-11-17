@@ -1,7 +1,8 @@
 import SwiftUI
+import SwiftData
 
 struct RecipeDetailView: View {
-    @Environment(RecipeStore.self) private var store
+    @Query private var recipes: [Recipe]
     let recipeID: UUID
     @State private var servings = 0
     @State private var checkedIngredients: Set<UUID> = []
@@ -9,7 +10,7 @@ struct RecipeDetailView: View {
 
     var body: some View {
         Group {
-            if let recipe = store.recipe(id: recipeID) {
+            if let recipe = recipes.first(where: { $0.id == recipeID }) {
                 details(recipe)
                     .onAppear { if servings == 0 { servings = recipe.servings } }
                     .toolbar {
@@ -80,7 +81,7 @@ struct RecipeDetailView: View {
             }
             .listRowBackground(Color.clear)
             Section {
-                ForEach(recipe.ingredients) { ingredient in
+                ForEach(recipe.ingredients.sorted { $0.order < $1.order }) { ingredient in
                     IngredientCheckRow(
                         ingredient: ingredient, servings: servings == 0 ? recipe.servings : servings,
                         baseServings: recipe.servings, checked: $checkedIngredients

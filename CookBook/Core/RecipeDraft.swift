@@ -49,7 +49,7 @@ struct StepDraft: Identifiable, Equatable, Sendable {
     var isEmpty: Bool { title.trimmed.isEmpty && instruction.trimmed.isEmpty }
 }
 
-struct RecipeDraft: Equatable, Sendable {
+struct RecipeDraft: Equatable {
     var original: Recipe?
     var title = ""
     var summary = ""
@@ -65,6 +65,23 @@ struct RecipeDraft: Equatable, Sendable {
     var video: MediaAttachment?
     var audio: MediaAttachment?
 
+    static func == (lhs: RecipeDraft, rhs: RecipeDraft) -> Bool {
+        lhs.original?.id == rhs.original?.id
+            && lhs.title == rhs.title
+            && lhs.summary == rhs.summary
+            && lhs.time == rhs.time
+            && lhs.servings == rhs.servings
+            && lhs.category == rhs.category
+            && lhs.difficulty == rhs.difficulty
+            && lhs.diet == rhs.diet
+            && lhs.ingredients == rhs.ingredients
+            && lhs.steps == rhs.steps
+            && lhs.imageName == rhs.imageName
+            && lhs.imageData == rhs.imageData
+            && lhs.video == rhs.video
+            && lhs.audio == rhs.audio
+    }
+
     init(recipe: Recipe? = nil, defaultServings: Int = 2) {
         original = recipe
         servings = String(defaultServings)
@@ -76,10 +93,10 @@ struct RecipeDraft: Equatable, Sendable {
         category = recipe.category
         difficulty = recipe.difficulty
         diet = recipe.diet
-        ingredients = recipe.ingredients.map {
+        ingredients = recipe.ingredients.sorted { $0.order < $1.order }.map {
             IngredientDraft(name: $0.name, quantity: $0.quantity(for: recipe.servings, baseServings: recipe.servings))
         }
-        steps = recipe.steps.map { StepDraft(title: $0.title, instruction: $0.instruction) }
+        steps = recipe.steps.sorted { $0.order < $1.order }.map { StepDraft(title: $0.title, instruction: $0.instruction) }
         imageName = recipe.imageName
         imageData = recipe.imageData
         video = recipe.video
@@ -120,7 +137,6 @@ struct RecipeDraft: Equatable, Sendable {
             servings: portions, ingredients: ingredients.compactMap { $0.makeIngredient() },
             steps: preparation, imageName: imageName, imageData: imageData,
             isFavorite: original?.isFavorite ?? false,
-            isUserCreated: original?.isUserCreated ?? true,
             createdAt: original?.createdAt ?? .now, video: video, audio: audio
         )
     }

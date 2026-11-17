@@ -1,16 +1,17 @@
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
-    @Environment(RecipeStore.self) private var store
+    @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
     let onSearch: (RecipeFilter) -> Void
     let onSettings: () -> Void
 
     private var featured: Recipe? {
-        store.recipes.first { $0.imageName == "recipe_orzo" } ?? store.recipes.first
+        recipes.first { $0.imageName == "recipe_orzo" } ?? recipes.first
     }
 
     private var quickRecipes: [Recipe] {
-        Array(store.recipes.filter { $0.id != featured?.id && $0.preparationTime <= 30 }.prefix(2))
+        Array(recipes.filter { $0.id != featured?.id && $0.preparationTime <= 30 }.prefix(2))
     }
 
     var body: some View {

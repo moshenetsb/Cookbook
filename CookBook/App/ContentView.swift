@@ -1,14 +1,16 @@
 import SwiftUI
+import SwiftData
 
 enum AppTab: Hashable {
     case home, search, favorites, add, settings
 }
 
 struct ContentView: View {
-    @Environment(RecipeStore.self) private var store
+    @Environment(\.modelContext) private var modelContext
     @State private var selectedTab: AppTab = .home
     @State private var searchFilter = RecipeFilter()
     @State private var searchQuery = ""
+    @State private var errorMessage: String?
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -43,13 +45,20 @@ struct ContentView: View {
                 .tabItem { Label("Ustawienia", systemImage: "gearshape") }
                 .tag(AppTab.settings)
         }
+        .task {
+            do {
+                try RecipeSeeder.seedIfNeeded(in: modelContext)
+            } catch {
+                errorMessage = "Nie udało się wczytać przepisów. \(error.localizedDescription)"
+            }
+        }
         .alert("Nie udało się wykonać operacji", isPresented: Binding(
-            get: { store.errorMessage != nil },
-            set: { if !$0 { store.errorMessage = nil } }
+            get: { errorMessage != nil },
+            set: { if !$0 { errorMessage = nil } }
         )) {
-            Button("OK", role: .cancel) { store.errorMessage = nil }
+            Button("OK", role: .cancel) { errorMessage = nil }
         } message: {
-            Text(store.errorMessage ?? "Spróbuj ponownie.")
+            Text(errorMessage ?? "Spróbuj ponownie.")
         }
     }
 }

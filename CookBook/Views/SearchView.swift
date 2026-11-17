@@ -1,12 +1,13 @@
 import SwiftUI
+import SwiftData
 
 struct SearchView: View {
-    @Environment(RecipeStore.self) private var store
+    @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
     @Binding var filter: RecipeFilter
     @Binding var query: String
     @State private var showsFilters = false
 
-    private var results: [Recipe] { filter.apply(to: store.recipes, query: query) }
+    private var results: [Recipe] { filter.apply(to: recipes, query: query) }
 
     var body: some View {
         NavigationStack {
@@ -65,7 +66,7 @@ struct SearchView: View {
 }
 
 struct FilterSheet: View {
-    @Environment(RecipeStore.self) private var store
+    @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
     @Environment(\.dismiss) private var dismiss
     @Binding var filter: RecipeFilter
     @State private var draft: RecipeFilter
@@ -141,7 +142,7 @@ struct FilterSheet: View {
                 ToolbarItem(placement: .topBarTrailing) { Button("Wyczyść") { draft = RecipeFilter() } }
             }
             .safeAreaInset(edge: .bottom) {
-                Button("Pokaż wyniki (\(draft.apply(to: store.recipes, query: query).count))") {
+                Button("Pokaż wyniki (\(draft.apply(to: recipes, query: query).count))") {
                     filter = draft
                     dismiss()
                 }

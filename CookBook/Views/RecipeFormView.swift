@@ -1,9 +1,10 @@
 import SwiftUI
+import SwiftData
 import PhotosUI
 import UniformTypeIdentifiers
 
 struct RecipeFormView: View {
-    @Environment(RecipeStore.self) private var store
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @AppStorage("defaultServings") private var defaultServings = 2
     let recipe: Recipe?
@@ -92,7 +93,7 @@ struct RecipeFormView: View {
                 allowsMultipleSelection: false,
                 onCompletion: importMedia
             )
-            .alert("Nie udało się wczytać pliku", isPresented: Binding(
+            .alert("Nie udało się wykonać operacji", isPresented: Binding(
                 get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } }
             )) {
                 Button("OK", role: .cancel) { errorMessage = nil }
@@ -258,7 +259,18 @@ struct RecipeFormView: View {
 
     private func save() {
         showsValidation = true
-        guard let savedRecipe = draft.makeRecipe(), store.save(savedRecipe) else { return }
+        guard let savedRecipe = draft.makeRecipe() else { return }
+        if let recipe {
+            modelContext.delete(recipe)
+        }
+        modelContext.insert(savedRecipe)
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            errorMessage = "Nie udało się zapisać przepisu. \(error.localizedDescription)"
+            return
+        }
         if recipe == nil { reset() } else { dismiss() }
         onSaved?(savedRecipe)
     }
