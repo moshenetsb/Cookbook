@@ -6,7 +6,7 @@ import UniformTypeIdentifiers
 struct RecipeFormView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("defaultServings") private var defaultServings = 2
+    @AppStorage("defaultServings") private var defaultServings = 1
     let recipe: Recipe?
     var onSaved: ((Recipe) -> Void)?
 
@@ -173,7 +173,7 @@ struct RecipeFormView: View {
         } header: {
             Text("Składniki")
         } footer: {
-            Text("Podaj ilości dla liczby porcji wpisanej powyżej. Aplikacja przeliczy wartości liczbowe przy zmianie porcji.")
+            Text("Ilości są zapisywane dla liczby porcji ustawionej w przepisie. W widokach przepisu będą przeliczane względem porcji z ustawień.")
         }
     }
 

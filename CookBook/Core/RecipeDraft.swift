@@ -54,7 +54,7 @@ struct RecipeDraft: Equatable {
     var title = ""
     var summary = ""
     var time = "30"
-    var servings = "2"
+    var servings = "1"
     var category: RecipeCategory = .main
     var difficulty: Difficulty = .easy
     var diet: Diet = .any
@@ -82,7 +82,7 @@ struct RecipeDraft: Equatable {
             && lhs.audio == rhs.audio
     }
 
-    init(recipe: Recipe? = nil, defaultServings: Int = 2) {
+    init(recipe: Recipe? = nil, defaultServings: Int = 1) {
         original = recipe
         servings = String(defaultServings)
         guard let recipe else { return }

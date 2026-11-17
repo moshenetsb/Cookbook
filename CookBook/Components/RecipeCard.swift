@@ -88,6 +88,7 @@ struct FavoriteButton: View {
 
 struct RecipeRow: View {
     @Environment(\.modelContext) private var modelContext
+    @AppStorage("defaultServings") private var defaultServings = 1
     
     let recipe: Recipe
     
@@ -113,7 +114,7 @@ struct RecipeRow: View {
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(AppTheme.ink)
                     
-                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue)")
+                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(defaultServings) por.")
                         .font(.caption)
                         .foregroundStyle(AppTheme.muted)
                 }
@@ -188,6 +189,7 @@ struct RecipeRow: View {
 
 
 struct RecipeCard: View {
+    @AppStorage("defaultServings") private var defaultServings = 1
     let recipe: Recipe
     
     var body: some View {
@@ -196,7 +198,7 @@ struct RecipeCard: View {
                 .frame(height: 90)
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             Text(recipe.title).font(.caption.weight(.semibold)).foregroundStyle(AppTheme.ink)
-            Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue)")
+            Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(defaultServings) por.")
                 .font(.caption2).foregroundStyle(AppTheme.muted)
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)

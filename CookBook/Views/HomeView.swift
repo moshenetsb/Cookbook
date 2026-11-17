@@ -3,11 +3,17 @@ import SwiftData
 
 struct HomeView: View {
     @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
+    @AppStorage("dailyRecipeID") private var dailyRecipeID = ""
+    @AppStorage("dailyRecipeDate") private var dailyRecipeDate = ""
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var currentDate = Date()
     let onSearch: (RecipeFilter) -> Void
     let onSettings: () -> Void
 
     private var featured: Recipe? {
-        recipes.first { $0.imageName == "recipe_orzo" } ?? recipes.first
+        guard dailyRecipeDate == dayKey(for: currentDate),
+              let id = UUID(uuidString: dailyRecipeID) else { return nil }
+        return recipes.first { $0.id == id }
     }
 
     private var quickRecipes: [Recipe] {
@@ -53,6 +59,60 @@ struct HomeView: View {
             .background(AppTheme.background)
             .toolbar(.hidden, for: .navigationBar)
         }
+        .task {
+            await updateDailyRecipeAtMidnight()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .active else { return }
+            currentDate = .now
+            selectDailyRecipeIfNeeded()
+        }
+        .onChange(of: recipes.map(\.id)) { _, _ in
+            selectDailyRecipeIfNeeded()
+        }
+    }
+
+    @MainActor
+    private func updateDailyRecipeAtMidnight() async {
+        while !Task.isCancelled {
+            currentDate = .now
+            selectDailyRecipeIfNeeded()
+
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: currentDate)
+            guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: today) else { return }
+            let delay = max(1, nextMidnight.timeIntervalSinceNow)
+
+            do {
+                try await Task.sleep(for: .seconds(delay))
+            } catch {
+                return
+            }
+        }
+    }
+
+    private func selectDailyRecipeIfNeeded() {
+        guard !recipes.isEmpty else { return }
+
+        let key = dayKey(for: .now)
+        if dailyRecipeDate == key,
+           let id = UUID(uuidString: dailyRecipeID),
+           recipes.contains(where: { $0.id == id }) {
+            return
+        }
+
+        guard let selection = recipes.randomElement() else { return }
+
+        dailyRecipeID = selection.id.uuidString
+        dailyRecipeDate = key
+        currentDate = .now
+    }
+
+    private func dayKey(for date: Date) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate]
+        formatter.timeZone = .current
+        return formatter.string(from: date)
     }
 
     private var brandHeader: some View {
@@ -77,6 +137,7 @@ struct HomeView: View {
 }
 
 private struct FeaturedRecipeCard: View {
+    @AppStorage("defaultServings") private var defaultServings = 1
     let recipe: Recipe
 
     var body: some View {
@@ -92,7 +153,7 @@ private struct FeaturedRecipeCard: View {
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 12) {
                     Text(recipe.title).font(.title2.bold())
-                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(recipe.diet.rawValue)")
+                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(defaultServings) por. · \(recipe.diet.rawValue)")
                         .font(.caption)
                 }
                 .foregroundStyle(.white).padding(16)

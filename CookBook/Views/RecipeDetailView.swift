@@ -3,16 +3,19 @@ import SwiftData
 
 struct RecipeDetailView: View {
     @Query private var recipes: [Recipe]
+    @AppStorage("defaultServings") private var defaultServings = 1
     let recipeID: UUID
-    @State private var servings = 0
     @State private var checkedIngredients: Set<UUID> = []
     @State private var selectedMedia: MediaKind?
+
+    private var displayServings: Int {
+        min(max(defaultServings, 1), 12)
+    }
 
     var body: some View {
         Group {
             if let recipe = recipes.first(where: { $0.id == recipeID }) {
                 details(recipe)
-                    .onAppear { if servings == 0 { servings = recipe.servings } }
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) { FavoriteButton(recipe: recipe) }
                     }
@@ -53,13 +56,13 @@ struct RecipeDetailView: View {
                     Divider()
                     metadata(recipe.difficulty.rawValue, caption: "POZIOM", symbol: "diamond")
                     Divider()
-                    metadata("\(servings == 0 ? recipe.servings : servings) os.", caption: "PORCJE", symbol: "person.2")
+                    metadata("\(displayServings)", caption: "PORCJE", symbol: "person.2")
                 }
                 .padding(.vertical, 4)
-                Stepper("Porcje: \(servings == 0 ? recipe.servings : servings)", value: Binding(
-                    get: { servings == 0 ? recipe.servings : servings },
-                    set: { servings = $0 }
-                ), in: 1...100)
+                Stepper("Porcje: \(displayServings)", value: Binding(
+                    get: { displayServings },
+                    set: { defaultServings = min(max($0, 1), 12) }
+                ), in: 1...12)
                     .font(.subheadline)
                     .accessibilityIdentifier("servingsStepper")
             }
@@ -83,7 +86,7 @@ struct RecipeDetailView: View {
             Section {
                 ForEach(recipe.ingredients.sorted { $0.order < $1.order }) { ingredient in
                     IngredientCheckRow(
-                        ingredient: ingredient, servings: servings == 0 ? recipe.servings : servings,
+                        ingredient: ingredient, servings: displayServings,
                         baseServings: recipe.servings, checked: $checkedIngredients
                     )
                 }
@@ -92,7 +95,7 @@ struct RecipeDetailView: View {
             }
             Section {
                 NavigationLink {
-                    CookingView(recipeID: recipe.id, servings: servings == 0 ? recipe.servings : servings)
+                    CookingView(recipeID: recipe.id, servings: displayServings)
                 } label: {
                     Text("Rozpocznij gotowanie").frame(maxWidth: .infinity, minHeight: 46)
                         .font(.subheadline.weight(.semibold)).foregroundStyle(.white)
