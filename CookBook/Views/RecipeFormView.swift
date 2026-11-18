@@ -202,7 +202,7 @@ struct RecipeFormView: View {
                 HStack(alignment: .top, spacing: 8) {
                     VStack(alignment: .leading, spacing: 8) {
                         TextField("Tytuł kroku (opcjonalnie)", text: $step.title).font(.subheadline.bold())
-                        TextField("Opisz kolejny krok", text: $step.instruction, axis: .vertical).lineLimit(2...6)
+                        TextField("Opisz kolejny krok", text: $step.instruction, axis: .vertical).lineLimit(1...6)
                         if let validation {
                             validationMessage(validation.stepFields[step.id]?.message)
                         }

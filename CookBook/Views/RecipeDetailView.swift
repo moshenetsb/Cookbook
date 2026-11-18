@@ -7,6 +7,7 @@ struct RecipeDetailView: View {
     let recipeID: UUID
     @State private var checkedIngredients: Set<UUID> = []
     @State private var selectedMedia: MediaKind?
+    @State private var showsCooking = false
 
     private var displayServings: Int {
         min(max(defaultServings, 1), 12)
@@ -94,14 +95,13 @@ struct RecipeDetailView: View {
                 HStack { Text("Składniki"); Spacer(); Text("\(recipe.ingredients.count) składników") }
             }
             Section {
-                NavigationLink {
-                    CookingView(recipeID: recipe.id, servings: displayServings)
-                } label: {
-                    Text("Rozpocznij gotowanie").frame(maxWidth: .infinity, minHeight: 46)
-                        .font(.subheadline.weight(.semibold)).foregroundStyle(.white)
-                }
-                .listRowBackground(AppTheme.green)
+                Button("Rozpocznij gotowanie") { showsCooking = true }
+                .buttonStyle(PrimaryButtonStyle())
+                .listRowBackground(Color.clear)
             }
+        }
+        .navigationDestination(isPresented: $showsCooking) {
+            CookingView(recipeID: recipe.id, servings: displayServings)
         }
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
