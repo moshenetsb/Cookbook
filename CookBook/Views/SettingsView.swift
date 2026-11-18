@@ -19,7 +19,7 @@ struct SettingsView: View {
                 }
                 Section {
                     LabeledContent("Bieżąca sesja", value: "Na tym iPhonie")
-                    LabeledContent("iCloud", value: "Niedostępne").foregroundStyle(.secondary)
+                    LabeledContent("iCloud", value: "Niedostępne")
                 } header: {
                     Text("Przechowywanie danych")
                 }
@@ -65,7 +65,6 @@ struct SettingsView: View {
                     }
 
                     LabeledContent("Powiadomienia", value: "Niedostępne")
-                        .foregroundStyle(.secondary)
 
                 } header: {
                     Text("Preferencje")

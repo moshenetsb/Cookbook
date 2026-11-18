@@ -32,6 +32,7 @@ struct RecipeFormView: View {
 
     private var isDirty: Bool { draft != initialDraft }
     private var isBusy: Bool { isImporting || isLoadingPhoto }
+    private var hasPhoto: Bool { draft.imageData != nil || !draft.imageName.isEmpty }
 
     var body: some View {
         NavigationStack {
@@ -110,13 +111,18 @@ struct RecipeFormView: View {
                         .frame(width: 88, height: 88)
                         .clipShape(RoundedRectangle(cornerRadius: 14))
                     VStack(alignment: .leading, spacing: 6) {
-                        Label("Dodaj zdjęcie potrawy", systemImage: "plus").font(.subheadline.bold())
-                        Text("Zdjęcie pojawi się na karcie przepisu").font(.caption).foregroundStyle(.secondary)
+                        if hasPhoto {
+                            Label("Zmień zdjęcie potrawy", systemImage: "photo").font(.subheadline.bold())
+                            Text("Dotknij, aby wybrać inne zdjęcie").font(.caption).foregroundStyle(.secondary)
+                        } else {
+                            Label("Dodaj zdjęcie potrawy", systemImage: "plus").font(.subheadline.bold())
+                            Text("Zdjęcie pojawi się na karcie przepisu").font(.caption).foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
             .disabled(isBusy)
-            .listRowBackground(AppTheme.mint)
+            .listRowBackground(hasPhoto ? AppTheme.surface : AppTheme.mint)
             if isLoadingPhoto { ProgressView("Wczytywanie zdjęcia…") }
             if draft.imageData != nil || !draft.imageName.isEmpty {
                 Button("Usuń zdjęcie", role: .destructive) {
