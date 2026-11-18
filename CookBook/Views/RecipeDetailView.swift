@@ -31,12 +31,13 @@ struct RecipeDetailView: View {
                                 Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
                                     .font(.headline)
                                     .foregroundStyle(recipe.isFavorite ? .white : AppTheme.ink)
-                                    .frame(width: 44, height: 44)
-                                    .background(recipe.isFavorite ? .pink : AppTheme.surface, in: Circle())
-                                    .overlay(Circle().stroke(recipe.isFavorite ? .pink : AppTheme.border, lineWidth: 1))
                                     .symbolEffect(.bounce, value: recipe.isFavorite)
                             }
                             .buttonStyle(.plain)
+                            .frame(width: 44, height: 44)
+                            .background(recipe.isFavorite ? .pink : AppTheme.surface, in: Circle())
+                            .overlay(Circle().stroke(recipe.isFavorite ? .pink : AppTheme.border, lineWidth: 1))
+                            .contentShape(Circle())
                             .accessibilityLabel(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")
                             .accessibilityValue(recipe.title)
                         }
@@ -135,7 +136,7 @@ struct RecipeDetailView: View {
             Section {
                 Button("Rozpocznij gotowanie") { showsCooking = true }
                 .buttonStyle(PrimaryButtonStyle())
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                 .listRowBackground(Color.clear)
             }
         }
@@ -148,7 +149,7 @@ struct RecipeDetailView: View {
     }
 
     private func metadata(_ title: String, caption: String, symbol: String) -> some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 8) {
             Label(title, systemImage: symbol).font(.caption.weight(.medium))
             Text(caption).font(.caption2).foregroundStyle(.secondary)
         }

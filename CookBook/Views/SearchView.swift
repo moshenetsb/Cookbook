@@ -22,7 +22,7 @@ struct SearchView: View {
                             FilterChip(title: "Do 30 min", isSelected: filter.time == .thirty, prominent: true) {
                                 filter.time = filter.time == .thirty ? .any : .thirty
                             }
-                            FilterChip(title: "Łatwe", isSelected: filter.difficulty == .easy) {
+                            FilterChip(title: "Łatwe", isSelected: filter.difficulty == .easy, prominent: true) {
                                 filter.difficulty = filter.difficulty == .easy ? nil : .easy
                             }
                         }
