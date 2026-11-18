@@ -28,6 +28,7 @@ struct FilterChip: View {
     let title: String
     var isSelected = false
     var prominent = false
+    var fillsWidth = false
     let action: () -> Void
 
     var body: some View {
@@ -37,9 +38,12 @@ struct FilterChip: View {
                 .foregroundStyle(isSelected ? (prominent ? .white : AppTheme.green) : AppTheme.ink)
                 .padding(.horizontal, 15)
                 .padding(.vertical, 8)
-                .background(isSelected ? (prominent ? AppTheme.green : AppTheme.mint) : AppTheme.surface, in: Capsule())
-                .overlay(Capsule().stroke(AppTheme.border, lineWidth: 1))
-                .frame(minHeight: 44)
+                .frame(maxWidth: fillsWidth ? .infinity : nil, minHeight: 44)
+                .background(
+                    isSelected ? (prominent ? AppTheme.green : AppTheme.green.opacity(0.18)) : AppTheme.mint,
+                    in: Capsule()
+                )
+                .overlay(Capsule().stroke(isSelected ? AppTheme.green.opacity(0.5) : AppTheme.border, lineWidth: 1))
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

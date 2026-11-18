@@ -112,9 +112,15 @@ struct FilterSheet: View {
                     .listRowBackground(Color.clear)
                 }
                 Section("Dieta") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 130))], alignment: .leading, spacing: 2) {
+                    LazyVGrid(
+                        columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible())],
+                        alignment: .leading,
+                        spacing: 8
+                    ) {
                         ForEach(Diet.allCases) { diet in
-                            FilterChip(title: diet.rawValue, isSelected: draft.diet == diet) { draft.diet = diet }
+                            FilterChip(title: diet.rawValue, isSelected: draft.diet == diet, fillsWidth: true) {
+                                draft.diet = diet
+                            }
                         }
                     }
                     .listRowInsets(EdgeInsets())
