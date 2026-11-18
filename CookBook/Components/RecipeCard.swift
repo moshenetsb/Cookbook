@@ -50,16 +50,22 @@ struct FavoriteButton: View {
     
     var body: some View {
         Button {
-            recipe.isFavorite.toggle()
+            withAnimation(reduceMotion ? nil : .spring(response: 0.32, dampingFraction: 0.55)) {
+                recipe.isFavorite.toggle()
+            }
             saveChanges()
         } label: {
             Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
                 .font(.headline)
-                .foregroundStyle(recipe.isFavorite ? .white : AppTheme.green)
+                .foregroundStyle(recipe.isFavorite ? .white : AppTheme.ink)
                 .frame(width: 32, height: 30)
-                .background(recipe.isFavorite ? AppTheme.green : AppTheme.mint, in: RoundedRectangle(cornerRadius: 9))
+                .background(recipe.isFavorite ? .pink : AppTheme.surface, in: RoundedRectangle(cornerRadius: 9))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 9)
+                        .stroke(recipe.isFavorite ? .pink : AppTheme.border, lineWidth: 1)
+                )
                 .scaleEffect(recipe.isFavorite ? 1.07 : 1)
-                .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.5), value: recipe.isFavorite)
+                .symbolEffect(.bounce, value: recipe.isFavorite)
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -141,13 +147,16 @@ struct RecipeRow: View {
             .tint(AppTheme.green)
             
             Button {
-                recipe.isFavorite.toggle()
+                withAnimation(.spring(response: 0.32, dampingFraction: 0.55)) {
+                    recipe.isFavorite.toggle()
+                }
                 saveChanges()
             } label: {
                 Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
+                    .contentTransition(.symbolEffect(.replace))
             }
             .accessibilityLabel(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")
-            .tint(recipe.isFavorite ? .pink : AppTheme.mint)
+            .tint(recipe.isFavorite ? .pink : .gray)
         }
         
         .sheet(isPresented: $isEditing) {
