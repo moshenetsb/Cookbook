@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 private enum FavoritesFilter: String, CaseIterable, Identifiable {
     case all = "Wszystkie"
@@ -9,11 +10,11 @@ private enum FavoritesFilter: String, CaseIterable, Identifiable {
 }
 
 struct FavoritesView: View {
-    @Environment(RecipeStore.self) private var store
+    @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
     @State private var query = ""
     @State private var selection: FavoritesFilter = .all
     
-    private var favorites: [Recipe] { store.recipes.filter(\.isFavorite) }
+    private var favorites: [Recipe] { recipes.filter(\.isFavorite) }
     private var results: [Recipe] {
         var filter = RecipeFilter()
         if selection == .quick { filter.time = .thirty }

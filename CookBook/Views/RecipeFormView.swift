@@ -1,11 +1,12 @@
 import SwiftUI
+import SwiftData
 import PhotosUI
 import UniformTypeIdentifiers
 
 struct RecipeFormView: View {
-    @Environment(RecipeStore.self) private var store
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("defaultServings") private var defaultServings = 2
+    @AppStorage("defaultServings") private var defaultServings = 1
     let recipe: Recipe?
     var onSaved: ((Recipe) -> Void)?
 
@@ -17,7 +18,7 @@ struct RecipeFormView: View {
     @State private var isImporting = false
     @State private var isLoadingPhoto = false
     @State private var errorMessage: String?
-    @State private var showsValidation = false
+    @State private var validation: RecipeValidation?
     @State private var confirmsDiscard = false
     @State private var hasAppeared = false
 
@@ -31,6 +32,7 @@ struct RecipeFormView: View {
 
     private var isDirty: Bool { draft != initialDraft }
     private var isBusy: Bool { isImporting || isLoadingPhoto }
+    private var hasPhoto: Bool { draft.imageData != nil || !draft.imageName.isEmpty }
 
     var body: some View {
         NavigationStack {
@@ -39,6 +41,7 @@ struct RecipeFormView: View {
                 Section("Nazwa przepisu") {
                     TextField("Np. Makaron z pieczarkami", text: $draft.title)
                         .accessibilityIdentifier("recipeTitle")
+                    if let validation { validationMessage(validation.title?.message) }
                     TextField("Krótki opis (opcjonalnie)", text: $draft.summary, axis: .vertical)
                         .lineLimit(2...4)
                 }
@@ -47,13 +50,6 @@ struct RecipeFormView: View {
                 stepsSection
                 mediaSection
 
-                if showsValidation && !draft.validationMessages.isEmpty {
-                    Section("Sprawdź formularz") {
-                        ForEach(draft.validationMessages, id: \.self) { message in
-                            Label(message, systemImage: "exclamationmark.circle").font(.subheadline).foregroundStyle(.red)
-                        }
-                    }
-                }
                 Section {
                     Button(recipe == nil ? "Zapisz przepis" : "Zapisz zmiany", action: save)
                         .buttonStyle(PrimaryButtonStyle())
@@ -85,6 +81,9 @@ struct RecipeFormView: View {
             .onChange(of: defaultServings) { _, _ in
                 if recipe == nil && !isDirty { reset() }
             }
+            .onChange(of: draft) { _, _ in
+                if validation != nil { validation = draft.validate() }
+            }
             .task(id: selectedPhoto) { await loadPhoto() }
             .fileImporter(
                 isPresented: $showsFileImporter,
@@ -92,7 +91,7 @@ struct RecipeFormView: View {
                 allowsMultipleSelection: false,
                 onCompletion: importMedia
             )
-            .alert("Nie udało się wczytać pliku", isPresented: Binding(
+            .alert("Nie udało się wykonać operacji", isPresented: Binding(
                 get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } }
             )) {
                 Button("OK", role: .cancel) { errorMessage = nil }
@@ -112,13 +111,18 @@ struct RecipeFormView: View {
                         .frame(width: 88, height: 88)
                         .clipShape(RoundedRectangle(cornerRadius: 14))
                     VStack(alignment: .leading, spacing: 6) {
-                        Label("Dodaj zdjęcie potrawy", systemImage: "plus").font(.subheadline.bold())
-                        Text("Zdjęcie pojawi się na karcie przepisu").font(.caption).foregroundStyle(.secondary)
+                        if hasPhoto {
+                            Label("Zmień zdjęcie potrawy", systemImage: "photo").font(.subheadline.bold())
+                            Text("Dotknij, aby wybrać inne zdjęcie").font(.caption).foregroundStyle(.secondary)
+                        } else {
+                            Label("Dodaj zdjęcie potrawy", systemImage: "plus").font(.subheadline.bold())
+                            Text("Zdjęcie pojawi się na karcie przepisu").font(.caption).foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
             .disabled(isBusy)
-            .listRowBackground(AppTheme.mint)
+            .listRowBackground(hasPhoto ? AppTheme.surface : AppTheme.mint)
             if isLoadingPhoto { ProgressView("Wczytywanie zdjęcia…") }
             if draft.imageData != nil || !draft.imageName.isEmpty {
                 Button("Usuń zdjęcie", role: .destructive) {
@@ -133,13 +137,20 @@ struct RecipeFormView: View {
 
     private var informationSection: some View {
         Section("Podstawowe informacje") {
-            LabeledContent("Czas (min)") {
-                TextField("30", text: $draft.time).keyboardType(.numberPad).multilineTextAlignment(.trailing)
-                    .accessibilityLabel("Czas przygotowania w minutach")
+            VStack(alignment: .leading, spacing: 4) {
+                LabeledContent("Czas (min)") {
+                    TextField("30", text: $draft.time).keyboardType(.numberPad).multilineTextAlignment(.trailing)
+                        .accessibilityLabel("Czas przygotowania w minutach")
+                }
+                if let validation { validationMessage(validation.preparationTimeIssue?.message) }
             }
-            LabeledContent("Liczba porcji") {
-                TextField("2", text: $draft.servings).keyboardType(.numberPad).multilineTextAlignment(.trailing)
-                    .accessibilityLabel("Liczba porcji")
+            VStack(alignment: .leading, spacing: 4) {
+                LabeledContent("Liczba porcji") {
+                    TextField(String(recipe?.servings ?? defaultServings), text: $draft.servings)
+                        .keyboardType(.numberPad).multilineTextAlignment(.trailing)
+                        .accessibilityLabel("Liczba porcji")
+                }
+                if let validation { validationMessage(validation.servingCountIssue?.message) }
             }
             Picker("Kategoria", selection: $draft.category) {
                 ForEach(RecipeCategory.allCases) { Text($0.rawValue).tag($0) }
@@ -159,8 +170,14 @@ struct RecipeFormView: View {
                 HStack(alignment: .top, spacing: 8) {
                     VStack(alignment: .leading, spacing: 8) {
                         TextField("Nazwa składnika", text: $ingredient.name)
+                        if let validation {
+                            validationMessage(validation.ingredientFields[ingredient.id]?.name?.message)
+                        }
                         TextField("Ilość, np. 250 g, 1/2 szt. lub do smaku", text: $ingredient.quantity)
-                            .font(.subheadline).foregroundStyle(.secondary)
+                            .font(.subheadline)
+                        if let validation {
+                            validationMessage(validation.ingredientFields[ingredient.id]?.quantity?.message)
+                        }
                     }
                     Button("Usuń składnik", systemImage: "minus.circle", role: .destructive) {
                         draft.ingredients.removeAll { $0.id == ingredient.id }
@@ -172,17 +189,23 @@ struct RecipeFormView: View {
         } header: {
             Text("Składniki")
         } footer: {
-            Text("Podaj ilości dla liczby porcji wpisanej powyżej. Aplikacja przeliczy wartości liczbowe przy zmianie porcji.")
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Ilości są zapisywane dla liczby porcji ustawionej w przepisie. W widokach przepisu będą przeliczane względem porcji z ustawień.")
+                if let validation { validationMessage(validation.ingredientsIssue?.message) }
+            }
         }
     }
 
     private var stepsSection: some View {
-        Section("Przygotowanie") {
+        Section {
             ForEach($draft.steps) { $step in
                 HStack(alignment: .top, spacing: 8) {
                     VStack(alignment: .leading, spacing: 8) {
                         TextField("Tytuł kroku (opcjonalnie)", text: $step.title).font(.subheadline.bold())
                         TextField("Opisz kolejny krok", text: $step.instruction, axis: .vertical).lineLimit(2...6)
+                        if let validation {
+                            validationMessage(validation.stepFields[step.id]?.message)
+                        }
                     }
                     Button("Usuń krok", systemImage: "minus.circle", role: .destructive) {
                         draft.steps.removeAll { $0.id == step.id }
@@ -191,6 +214,10 @@ struct RecipeFormView: View {
                 }
             }
             Button("Dodaj krok", systemImage: "plus.circle") { draft.steps.append(StepDraft()) }
+        } header: {
+            Text("Przygotowanie")
+        } footer: {
+            if let validation { validationMessage(validation.stepsIssue?.message) }
         }
     }
 
@@ -256,9 +283,38 @@ struct RecipeFormView: View {
         }
     }
 
+    @ViewBuilder
+    private func validationMessage(_ message: String?) -> some View {
+        if let message {
+            Label(message, systemImage: "exclamationmark.circle")
+                .font(.caption)
+                .foregroundStyle(.red)
+                .accessibilityLabel(message)
+        }
+    }
+
     private func save() {
-        showsValidation = true
-        guard let savedRecipe = draft.makeRecipe(), store.save(savedRecipe) else { return }
+        let savedRecipe: Recipe
+        switch draft.makeRecipe() {
+        case .success(let recipe):
+            savedRecipe = recipe
+            validation = nil
+        case .failure(let errors):
+            validation = errors
+            return
+        }
+
+        if let recipe {
+            modelContext.delete(recipe)
+        }
+        modelContext.insert(savedRecipe)
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            errorMessage = "Nie udało się zapisać przepisu. \(error.localizedDescription)"
+            return
+        }
         if recipe == nil { reset() } else { dismiss() }
         onSaved?(savedRecipe)
     }
@@ -267,7 +323,7 @@ struct RecipeFormView: View {
         draft = RecipeDraft(defaultServings: min(max(defaultServings, 1), 12))
         initialDraft = draft
         selectedPhoto = nil
-        showsValidation = false
+        validation = nil
     }
 
     private func cancel() {

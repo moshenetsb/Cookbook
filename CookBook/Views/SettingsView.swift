@@ -19,7 +19,7 @@ struct SettingsView: View {
                 }
                 Section {
                     LabeledContent("Bieżąca sesja", value: "Na tym iPhonie")
-                    LabeledContent("iCloud", value: "Niedostępne").foregroundStyle(.secondary)
+                    LabeledContent("iCloud", value: "Niedostępne")
                 } header: {
                     Text("Przechowywanie danych")
                 }
@@ -36,31 +36,35 @@ struct SettingsView: View {
                             } label: {
                                 Image(systemName: "minus.circle.fill")
                                     .font(.title2)
-                                    .foregroundStyle(AppTheme.green)
+                                    .foregroundStyle(defaultServings <= 1 ? Color.gray : AppTheme.green)
                             }
+                            .disabled(defaultServings <= 1)
+                            .accessibilityLabel("Zmniejsz domyślną liczbę porcji")
 
                             Text("\(defaultServings)")
-                                .id(defaultServings)
                                 .font(.headline)
                                 .monospacedDigit()
                                 .frame(width: 25)
+                                .contentTransition(.numericText())
+                                .animation(.snappy(duration: 0.2), value: defaultServings)
 
                             Button {
                                 defaultServings = min(12, defaultServings + 1)
                             } label: {
                                 Image(systemName: "plus.circle.fill")
                                     .font(.title2)
-                                    .foregroundStyle(AppTheme.green)
+                                    .foregroundStyle(defaultServings >= 12 ? Color.gray : AppTheme.green)
                             }
+                            .disabled(defaultServings >= 12)
+                            .accessibilityLabel("Zwiększ domyślną liczbę porcji")
                         }
 
-                        Text("Domyślna liczba porcji jest używana przy tworzeniu nowego przepisu.")
+                        Text("Używana przy tworzeniu przepisu i wyświetlaniu przeliczonych ilości składników.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
 
                     LabeledContent("Powiadomienia", value: "Niedostępne")
-                        .foregroundStyle(.secondary)
 
                 } header: {
                     Text("Preferencje")
@@ -79,6 +83,9 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             .background(AppTheme.background)
             .navigationTitle("Ustawienia")
+            .onAppear {
+                defaultServings = min(max(defaultServings, 1), 12)
+            }
         }
     }
 }

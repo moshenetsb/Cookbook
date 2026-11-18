@@ -43,7 +43,6 @@ struct RecipeFilter: Equatable, Sendable {
                 && (category == nil || recipe.category == category)
         }
 
-        // Offset rozstrzyga remisy, więc kolejność nie skacze przy odświeżaniu widoku.
         return matches.enumerated().sorted { left, right in
             let lhs = left.element
             let rhs = right.element

@@ -1,7 +1,6 @@
 import Foundation
 
 enum SampleRecipes {
-    // Dane demonstracyjne w kodzie, bez bazy i bez plików audio/wideo.
     static func make() -> [Recipe] {
         let recipes: [Recipe] = [
             Recipe(
@@ -251,7 +250,7 @@ enum SampleRecipes {
         ]
         return recipes.enumerated().map { index, recipe in
             var recipe = recipe
-            recipe.createdAt = Date(timeIntervalSince1970: 1_790_000_000 - Double(index * 86_400))
+            recipe.createdAt = Calendar.current.date(byAdding: .day, value: -index, to: Date()) ?? Date()
             return recipe
         }
     }

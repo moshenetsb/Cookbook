@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import UIKit
 
 struct RecipePhoto: View {
@@ -42,13 +43,15 @@ struct RecipePhoto: View {
 }
 
 struct FavoriteButton: View {
-    @Environment(RecipeStore.self) private var store
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let recipe: Recipe
+    @State private var errorMessage: String?
     
     var body: some View {
         Button {
-            store.toggleFavorite(id: recipe.id)
+            recipe.isFavorite.toggle()
+            saveChanges()
         } label: {
             Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
                 .font(.headline)
@@ -63,64 +66,35 @@ struct FavoriteButton: View {
         .buttonStyle(.plain)
         .accessibilityLabel(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")
         .accessibilityValue(recipe.title)
+        .alert("Nie udało się zapisać zmian", isPresented: Binding(
+            get: { errorMessage != nil },
+            set: { if !$0 { errorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) { errorMessage = nil }
+        } message: {
+            Text(errorMessage ?? "Spróbuj ponownie.")
+        }
+    }
+
+    private func saveChanges() {
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            errorMessage = error.localizedDescription
+        }
     }
 }
-//
-//struct RecipeRow: View {
-//    @Environment(RecipeStore.self) private var store
-//    let recipe: Recipe
-//    @State private var isEditing = false
-//    @State private var confirmsDelete = false
-//
-//    var body: some View {
-//        VStack(spacing: 0) {
-//            NavigationLink {
-//                RecipeDetailView(recipeID: recipe.id)
-//            } label: {
-//                HStack(spacing: 14) {
-//                    RecipePhoto(recipe: recipe)
-//                        .frame(width: 104, height: 104)
-//                        .clipShape(RoundedRectangle(cornerRadius: 14))
-//                    VStack(alignment: .leading, spacing: 8) {
-//                        Text(recipe.category.rawValue.uppercased())
-//                            .font(.caption2.weight(.bold)).foregroundStyle(AppTheme.green)
-//                        Text(recipe.title).font(.subheadline.weight(.semibold)).foregroundStyle(AppTheme.ink)
-//                        Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue)")
-//                            .font(.caption).foregroundStyle(AppTheme.muted)
-//                    }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                }
-//            }
-//            .buttonStyle(.plain)
-//            HStack(spacing: 4) {
-//                Spacer()
-//                Button("Usuń", role: .destructive) { confirmsDelete = true }
-//                    .font(.caption).frame(minWidth: 48, minHeight: 44)
-//                Button("Edytuj") { isEditing = true }
-//                    .font(.caption).frame(minWidth: 52, minHeight: 44)
-//                FavoriteButton(recipe: recipe)
-//            }
-//            .buttonStyle(.borderless)
-//        }
-//        .padding(.vertical, 8)
-//        .sheet(isPresented: $isEditing) { RecipeFormView(recipe: recipe) }
-//        .confirmationDialog("Usunąć „\(recipe.title)” ?", isPresented: $confirmsDelete, titleVisibility: .visible) {
-//            Button("Usuń przepis", role: .destructive) { store.delete(id: recipe.id) }
-//            Button("Anuluj", role: .cancel) { }
-//        } message: {
-//            Text("Przepis zniknie również z ulubionych.")
-//        }
-//    }
-//}
-
 
 struct RecipeRow: View {
-    @Environment(RecipeStore.self) private var store
+    @Environment(\.modelContext) private var modelContext
+    @AppStorage("defaultServings") private var defaultServings = 1
     
     let recipe: Recipe
     
     @State private var isEditing = false
     @State private var confirmsDelete = false
+    @State private var errorMessage: String?
     
     var body: some View {
         NavigationLink {
@@ -140,7 +114,7 @@ struct RecipeRow: View {
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(AppTheme.ink)
                     
-                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue)")
+                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(defaultServings) por.")
                         .font(.caption)
                         .foregroundStyle(AppTheme.muted)
                 }
@@ -167,7 +141,8 @@ struct RecipeRow: View {
             .tint(AppTheme.green)
             
             Button {
-                store.toggleFavorite(id: recipe.id)
+                recipe.isFavorite.toggle()
+                saveChanges()
             } label: {
                 Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
             }
@@ -184,18 +159,37 @@ struct RecipeRow: View {
             titleVisibility: .visible
         ) {
             Button("Usuń przepis", role: .destructive) {
-                store.delete(id: recipe.id)
+                modelContext.delete(recipe)
+                saveChanges()
             }
             
             Button("Anuluj", role: .cancel) {}
         } message: {
             Text("Przepis zniknie również z ulubionych.")
         }
+        .alert("Nie udało się zapisać zmian", isPresented: Binding(
+            get: { errorMessage != nil },
+            set: { if !$0 { errorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) { errorMessage = nil }
+        } message: {
+            Text(errorMessage ?? "Spróbuj ponownie.")
+        }
+    }
+
+    private func saveChanges() {
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            errorMessage = error.localizedDescription
+        }
     }
 }
 
 
 struct RecipeCard: View {
+    @AppStorage("defaultServings") private var defaultServings = 1
     let recipe: Recipe
     
     var body: some View {
@@ -204,7 +198,7 @@ struct RecipeCard: View {
                 .frame(height: 90)
                 .clipShape(RoundedRectangle(cornerRadius: 14))
             Text(recipe.title).font(.caption.weight(.semibold)).foregroundStyle(AppTheme.ink)
-            Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue)")
+            Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(defaultServings) por.")
                 .font(.caption2).foregroundStyle(AppTheme.muted)
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)

@@ -1,7 +1,8 @@
 import SwiftUI
+import SwiftData
 
 struct CookingView: View {
-    @Environment(RecipeStore.self) private var store
+    @Query private var recipes: [Recipe]
     @Environment(\.dismiss) private var dismiss
     let recipeID: UUID
     let servings: Int
@@ -11,7 +12,7 @@ struct CookingView: View {
 
     var body: some View {
         Group {
-            if let recipe = store.recipe(id: recipeID) {
+            if let recipe = recipes.first(where: { $0.id == recipeID }) {
                 List {
                     Section {
                         HStack(spacing: 12) {
@@ -27,7 +28,7 @@ struct CookingView: View {
                     }
                     .listRowBackground(Color.clear)
                     Section("Składniki") {
-                        ForEach(recipe.ingredients) { ingredient in
+                        ForEach(recipe.ingredients.sorted { $0.order < $1.order }) { ingredient in
                             IngredientCheckRow(ingredient: ingredient, servings: servings, baseServings: recipe.servings, checked: $checkedIngredients)
                         }
                     }
@@ -35,7 +36,7 @@ struct CookingView: View {
                         ProgressView(value: Double(completedSteps.count), total: Double(max(recipe.steps.count, 1))) {
                             Text("Ukończone kroki: \(completedSteps.count) z \(recipe.steps.count)").font(.caption)
                         }
-                        ForEach(Array(recipe.steps.enumerated()), id: \.element.id) { index, step in
+                        ForEach(Array(recipe.steps.sorted { $0.order < $1.order }.enumerated()), id: \.element.id) { index, step in
                             stepRow(step, number: index + 1)
                         }
                     } header: { Text("Przygotowanie") }
