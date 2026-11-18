@@ -45,7 +45,7 @@ struct RecipePhoto: View {
 struct FavoriteButton: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    let recipe: Recipe
+    @Bindable var recipe: Recipe
     @State private var errorMessage: String?
     
     var body: some View {
@@ -90,7 +90,7 @@ struct RecipeRow: View {
     @Environment(\.modelContext) private var modelContext
     @AppStorage("defaultServings") private var defaultServings = 1
     
-    let recipe: Recipe
+    @Bindable var recipe: Recipe
     
     @State private var isEditing = false
     @State private var confirmsDelete = false
@@ -146,7 +146,8 @@ struct RecipeRow: View {
             } label: {
                 Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
             }
-            .tint(.pink)
+            .accessibilityLabel(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")
+            .tint(recipe.isFavorite ? .pink : AppTheme.mint)
         }
         
         .sheet(isPresented: $isEditing) {
