@@ -11,11 +11,8 @@ private enum FavoritesFilter: String, CaseIterable, Identifiable {
 
 struct FavoritesView: View {
     @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
-    @Environment(\.modelContext) private var modelContext
     @State private var query = ""
     @State private var selection: FavoritesFilter = .all
-    @State private var recipePendingDeletion: Recipe?
-    @State private var deleteError: String?
     
     private var favorites: [Recipe] { recipes.filter(\.isFavorite) }
     private var results: [Recipe] {
@@ -61,9 +58,7 @@ struct FavoritesView: View {
                 
                 Section {
                     
-                    ForEach(results) {
-                        RecipeRow(recipe: $0) { recipePendingDeletion = $0 }
-                    }
+                    ForEach(results) { RecipeRow(recipe: $0) }
                         .listRowBackground(AppTheme.background)
                     
                     if results.isEmpty {
@@ -81,41 +76,6 @@ struct FavoritesView: View {
             .background(AppTheme.background)
             .navigationTitle("Twoje ulubione")
             .scrollDismissesKeyboard(.interactively)
-            .confirmationDialog(
-                "Usunąć przepis?",
-                isPresented: Binding(
-                    get: { recipePendingDeletion != nil },
-                    set: { if !$0 { recipePendingDeletion = nil } }
-                ),
-                titleVisibility: .visible
-            ) {
-                Button("Usuń przepis", role: .destructive, action: deletePendingRecipe)
-                Button("Anuluj", role: .cancel) { recipePendingDeletion = nil }
-            } message: {
-                if let recipePendingDeletion {
-                    Text("Usunąć „\(recipePendingDeletion.title)”? Przepis zniknie również z ulubionych.")
-                }
-            }
-            .alert("Nie udało się usunąć przepisu", isPresented: Binding(
-                get: { deleteError != nil },
-                set: { if !$0 { deleteError = nil } }
-            )) {
-                Button("OK", role: .cancel) { deleteError = nil }
-            } message: {
-                Text(deleteError ?? "Spróbuj ponownie.")
-            }
-        }
-    }
-
-    private func deletePendingRecipe() {
-        guard let recipe = recipePendingDeletion else { return }
-        recipePendingDeletion = nil
-        modelContext.delete(recipe)
-        do {
-            try modelContext.save()
-        } catch {
-            modelContext.rollback()
-            deleteError = error.localizedDescription
         }
     }
 }
