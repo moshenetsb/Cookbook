@@ -3,11 +3,14 @@ import SwiftData
 
 struct RecipeDetailView: View {
     @Query private var recipes: [Recipe]
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage("defaultServings") private var defaultServings = 1
     let recipeID: UUID
     @State private var checkedIngredients: Set<UUID> = []
     @State private var selectedMedia: MediaKind?
     @State private var showsCooking = false
+    @State private var favoriteError: String?
 
     private var displayServings: Int {
         min(max(defaultServings, 1), 12)
@@ -18,7 +21,25 @@ struct RecipeDetailView: View {
             if let recipe = recipes.first(where: { $0.id == recipeID }) {
                 details(recipe)
                     .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) { FavoriteButton(recipe: recipe) }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                withAnimation(reduceMotion ? nil : .spring(response: 0.32, dampingFraction: 0.55)) {
+                                    recipe.isFavorite.toggle()
+                                }
+                                saveFavorite()
+                            } label: {
+                                Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
+                                    .font(.headline)
+                                    .foregroundStyle(recipe.isFavorite ? .white : AppTheme.ink)
+                                    .frame(width: 44, height: 44)
+                                    .background(recipe.isFavorite ? .pink : AppTheme.surface, in: Circle())
+                                    .overlay(Circle().stroke(recipe.isFavorite ? .pink : AppTheme.border, lineWidth: 1))
+                                    .symbolEffect(.bounce, value: recipe.isFavorite)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")
+                            .accessibilityValue(recipe.title)
+                        }
                     }
                     .sheet(item: $selectedMedia) { kind in
                         MediaPlayerView(kind: kind, attachment: kind == .video ? recipe.video : recipe.audio)
@@ -30,6 +51,23 @@ struct RecipeDetailView: View {
         .navigationTitle("Przepis")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
+        .alert("Nie udało się zapisać zmian", isPresented: Binding(
+            get: { favoriteError != nil },
+            set: { if !$0 { favoriteError = nil } }
+        )) {
+            Button("OK", role: .cancel) { favoriteError = nil }
+        } message: {
+            Text(favoriteError ?? "Spróbuj ponownie.")
+        }
+    }
+
+    private func saveFavorite() {
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            favoriteError = error.localizedDescription
+        }
     }
 
     private func details(_ recipe: Recipe) -> some View {
@@ -39,7 +77,7 @@ struct RecipeDetailView: View {
                     .frame(height: 228)
                     .clipShape(RoundedRectangle(cornerRadius: 22))
                     .listRowInsets(EdgeInsets())
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text([recipe.category.rawValue, recipe.diet.rawValue].joined(separator: " · ").uppercased())
                         .font(.caption2.bold()).foregroundStyle(AppTheme.green)
                     Text(recipe.title).font(.title2.bold())
