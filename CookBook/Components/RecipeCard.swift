@@ -97,9 +97,9 @@ struct RecipeRow: View {
     @AppStorage("defaultServings") private var defaultServings = 1
     
     @Bindable var recipe: Recipe
+    let onDeleteRequested: (Recipe) -> Void
     
     @State private var isEditing = false
-    @State private var confirmsDelete = false
     @State private var errorMessage: String?
     
     var body: some View {
@@ -133,7 +133,7 @@ struct RecipeRow: View {
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
             
             Button(role: .destructive) {
-                confirmsDelete = true
+                onDeleteRequested(recipe)
             } label: {
                 Image(systemName: "trash")
             }
@@ -163,20 +163,6 @@ struct RecipeRow: View {
             RecipeFormView(recipe: recipe)
         }
         
-        .confirmationDialog(
-            "Usunąć „\(recipe.title)”?",
-            isPresented: $confirmsDelete,
-            titleVisibility: .visible
-        ) {
-            Button("Usuń przepis", role: .destructive) {
-                modelContext.delete(recipe)
-                saveChanges()
-            }
-            
-            Button("Anuluj", role: .cancel) {}
-        } message: {
-            Text("Przepis zniknie również z ulubionych.")
-        }
         .alert("Nie udało się zapisać zmian", isPresented: Binding(
             get: { errorMessage != nil },
             set: { if !$0 { errorMessage = nil } }
