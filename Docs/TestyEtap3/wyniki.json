@@ -1,0 +1,631 @@
+{
+  "environment": {
+    "timestamp": "2026-11-21T19:02:49+01:00",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "ffmpeg": "ffmpeg version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "xcodebuild": null,
+    "swift": null,
+    "revision_sha256": "ba818094b25424e4777007b1729fe2223156846ec3fdfb936d0b31c9b5258dce",
+    "source_folder": "C:\\Users\\Szyme\\Desktop\\Cookbook-main\\Cookbook-main"
+  },
+  "checks": [
+    {
+      "id": "S01",
+      "title": "Składnia i integralność projektu",
+      "status": "PASS",
+      "actual": "27 plików Swift; 37 obiektów; 3 targety; schemat XML; brak błędów raportu. Nie sprawdzono typów ani makr.",
+      "evidence": "static-run.log; ../static-validation.json"
+    },
+    {
+      "id": "S02",
+      "title": "Obrazy i fotografie",
+      "status": "PASS",
+      "actual": "Odczytano 19 obrazów; 15 różnych zdjęć potraw; ikony mają 1024 x 1024.",
+      "evidence": "static-run.log"
+    },
+    {
+      "id": "S03",
+      "title": "Pełne dekodowanie MP4",
+      "status": "PASS",
+      "actual": "FFmpeg przetworzył cały plik; kod zakończenia 0. To test pliku, nie odtwarzacza iOS.",
+      "evidence": "decode-mp4.log; info-mp4.log"
+    },
+    {
+      "id": "S04",
+      "title": "Pełne dekodowanie WAV",
+      "status": "PASS",
+      "actual": "FFmpeg przetworzył cały plik; kod zakończenia 0. To test pliku, nie odtwarzacza iOS.",
+      "evidence": "decode-wav.log; info-wav.log"
+    },
+    {
+      "id": "S05",
+      "title": "Struktura WAV i dane PCM",
+      "status": "PASS",
+      "actual": "21.92 s; 48000 Hz; 1 kanał; 16 bit; odczyt wszystkich próbek, sygnał nie jest całkowicie zerowy. Nie oceniano treści narracji.",
+      "evidence": "audio-pcm.json"
+    },
+    {
+      "id": "S06",
+      "title": "Zgodność załączników z oryginałami",
+      "status": "PASS",
+      "actual": "Porównanie SHA-256 obu zasobów z dostarczonymi plikami w Downloads.",
+      "evidence": "media-copy.json; manifest-sha256.json"
+    },
+    {
+      "id": "S07",
+      "title": "Tożsamość testowanej wersji",
+      "status": "PASS",
+      "actual": "Porównano 75 plików źródeł, testów, zasobów i projektu z folderem na Pulpicie.",
+      "evidence": "manifest-sha256.json"
+    },
+    {
+      "id": "S08",
+      "title": "Lokalne odsyłacze dokumentacji",
+      "status": "PASS",
+      "actual": "Nieprawidłowe lokalne odsyłacze: 0. Nie sprawdzano stron zewnętrznych.",
+      "evidence": "documentation-links.json"
+    }
+  ],
+  "automated": [
+    {
+      "id": "A01",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testQuantityParsesPolishDecimalFractionAndText",
+      "title": "Odczyt 1,5; 1/2; 250g i tekstu do smaku",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A02",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testInvalidQuantitiesAreRejected",
+      "title": "Odrzucenie zera, wartości ujemnych, błędnych ułamków i przepełnienia",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A03",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testScalingUsesBaseServingsWithoutMutatingIngredient",
+      "title": "Skalowanie 200 g / 2 do 300 g / 3 bez zmiany modelu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A04",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testScalingHandlesInvalidLegacyServingsWithoutDividingByZero",
+      "title": "Brak dzielenia przez zero dla starych danych",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A05",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testNewDraftUsesDefaultButEditUsesRecipeBaseServings",
+      "title": "Domyślne porcje dla nowego szkicu, bazowe dla edycji",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A06",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testInvalidDefaultsAreClamped",
+      "title": "Ograniczenie preferencji do 1-12",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A07",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testUnchangedEditPreservesIngredientPrecisionAndIDs",
+      "title": "Zachowanie Double i UUID przy edycji",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A08",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testDraftDoesNotMutateOriginalBeforeSave",
+      "title": "Niezależność niezapisanego szkicu od modelu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A09",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testEmptyDraftReportsRequiredFields",
+      "title": "Wymagane pola pustego formularza",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A10",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testPartialRowsAreNotSilentlyDropped",
+      "title": "Błędy częściowo wypełnionych wierszy",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A11",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testBlankExtraRowsAreIgnored",
+      "title": "Pomijanie całkowicie pustych dodatkowych wierszy",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A12",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testTimeAndServingValidationBoundaries",
+      "title": "Granice porcji 1-100 i czasu 1-1440",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A13",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testSearchMatchesPolishCharactersAndMultipleIngredients",
+      "title": "Wyszukiwanie bez polskich znaków i wieloma słowami",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A14",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testFiltersIntersectAndVegetarianIncludesVegan",
+      "title": "Przecięcie filtrów i dieta wegetariańska",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A15",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testSortingAndTiesAreStable",
+      "title": "Sortowanie i stabilność remisów",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A16",
+      "file": "CookBookTests/RecipeLogicTests.swift",
+      "method": "testAllFifteenSampleRecipesAreValidAndUseDifferentPhotos",
+      "title": "Walidacja 15 przykładów i kolejność składników",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A17",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testBundledWrapVideoIsAddedToExistingDatabaseOnlyOnce",
+      "title": "Film w istniejącej bazie, brak odtwarzania po usunięciu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A18",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testBundledWrapVideoDoesNotReplaceCustomVideo",
+      "title": "Zachowanie własnego filmu i audio",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A19",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testWrapAudioIsAddedAfterEarlierVideoMigrationOnlyOnce",
+      "title": "Audio po wcześniejszej migracji filmu, tylko raz",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A20",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testFavoriteTogglesArePersistedAndReversible",
+      "title": "Wielokrotne polubienie i odczyt w nowym kontekście",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A21",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testEditPreservesObjectIdentityFavoriteAndCreationDate",
+      "title": "Tożsamość edytowanego modelu, data i polubienie",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A22",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testReplacingChildrenDoesNotLeaveOrphans",
+      "title": "Usunięcie starych dzieci i poprawne relacje nowych",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A23",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testDeleteCascadesToIngredientsAndSteps",
+      "title": "Usuwanie kaskadowe składników i kroków",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A24",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testInvalidEditLeavesStoredRecipeUnchanged",
+      "title": "Błędny szkic nie zmienia bazy",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A25",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testSeedRunsOnceEvenAfterDeletingEveryRecipe",
+      "title": "Jednorazowy seed, także po wyczyszczeniu książki",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A26",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testExistingDatabaseIsNotSeededAgain",
+      "title": "Brak zasiewania istniejącej bazy",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A27",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testDiskStoreSurvivesReopeningWithOrderAndFavorite",
+      "title": "Ponowne otwarcie magazynu na dysku",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A28",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testFailedFavoriteSaveRollsBackTheDisplayedState",
+      "title": "Rollback po zapisie do magazynu tylko do odczytu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A29",
+      "file": "CookBookTests/RecipePersistenceTests.swift",
+      "method": "testAttachmentIdentityAndRelativePathAreStable",
+      "title": "Stabilność załącznika i względna ścieżka",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A30",
+      "file": "CookBookUITests/RecipeFlowUITests.swift",
+      "method": "testFavoriteButtonDoesNotOpenRecipeAndSynchronizesWithFavorites",
+      "title": "Serce bez nawigacji; synchronizacja z Ulubionymi",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A31",
+      "file": "CookBookUITests/RecipeFlowUITests.swift",
+      "method": "testDetailServingsDoNotOverwriteDefaults",
+      "title": "Bieżące porcje nie nadpisują preferencji",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A32",
+      "file": "CookBookUITests/RecipeFlowUITests.swift",
+      "method": "testDefaultsDoNotOverwriteAnInProgressDraft",
+      "title": "Zmiana preferencji nie nadpisuje rozpoczętego szkicu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    },
+    {
+      "id": "A33",
+      "file": "CookBookUITests/RecipeFlowUITests.swift",
+      "method": "testEmptyRecipeShowsValidationInsteadOfSaving",
+      "title": "Pusty formularz zgłasza walidację zamiast zapisu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak Xcode/SDK iOS w środowisku wykonawczym.",
+      "evidence": "Do uzyskania: Tests.xcresult"
+    }
+  ],
+  "manual": [
+    {
+      "id": "M01",
+      "title": "Dodanie przepisu",
+      "preconditions": "Zwykła instalacja, zakładka Dodaj.",
+      "steps": "Wpisz Test ryżu, 20 min, 2 porcje, Ryż 200 g, krok Ugotuj. Zapisz i wyszukaj Test ryżu.",
+      "expected": "Jeden przepis z podanymi danymi; formularz wyczyszczony po zapisie.",
+      "evidence": "Zrzut formularza i szczegółów",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M02",
+      "title": "Walidacja granic",
+      "preconditions": "Nowy formularz z poprawnym składnikiem i krokiem.",
+      "steps": "Sprawdź osobno porcje 0, 1, 100, 101 oraz czas 0, 1, 1440, 1441. Sprawdź pusty tytuł i ilość 1/0.",
+      "expected": "1 i 100 porcji oraz 1 i 1440 min akceptowane; pozostałe skrajne wartości odrzucone. Puste wymagane dane nie zapisują przepisu.",
+      "evidence": "Zrzuty błędów, tabela wejść i wyników",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M03",
+      "title": "Anulowanie edycji",
+      "preconditions": "Istnieje Test ryżu.",
+      "steps": "Przeciągnij wiersz w prawo, Edytuj. Zmień tytuł i ilość; Anuluj, odrzuć zmiany.",
+      "expected": "Oryginalny tytuł, 200 g i liczba porcji pozostają.",
+      "evidence": "Zrzut przed i po",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M04",
+      "title": "Edycja i kolejność",
+      "preconditions": "Test ryżu ma dwa składniki i dwa kroki; jest ulubiony.",
+      "steps": "Usuń jeden składnik i krok, dodaj nowe; zapisz; zamknij i otwórz aplikację.",
+      "expected": "Zmiany trwałe, kolejność właściwa, brak duplikatu przepisu i polubienie zachowane.",
+      "evidence": "Nagranie i zrzut po restarcie",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M05",
+      "title": "Potwierdzenie usuwania",
+      "preconditions": "Test ryżu istnieje.",
+      "steps": "Wybierz Usuń gestem; anuluj. Powtórz i potwierdź; sprawdź wyszukiwanie i Ulubione.",
+      "expected": "Anulowanie zachowuje wiersz. Potwierdzenie usuwa przepis ze wszystkich list.",
+      "evidence": "Nagranie obu wariantów",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M06",
+      "title": "Ulubione i animacja",
+      "preconditions": "Curry warzywne nie jest ulubione; Ogranicz ruch wyłączone.",
+      "steps": "Dotknij serca na liście; otwórz szczegóły i Ulubione; usuń polubienie. Powtórz 10 kliknięć na liście.",
+      "expected": "Serce nie otwiera przepisu; stan zgodny; bounce widoczny; parzysta liczba przełączeń przywraca stan; brak awarii.",
+      "evidence": "Nagranie ekranu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M07",
+      "title": "Ogranicz ruch",
+      "preconditions": "Włącz systemowe Ogranicz ruch.",
+      "steps": "Powtórz przełączenie serca w szczegółach i usunięcie pozycji z Ulubionych.",
+      "expected": "Zapis działa bez bounce i animowanego przejścia listy.",
+      "evidence": "Nagranie z ustawieniem systemowym",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M08",
+      "title": "Skalowanie porcji",
+      "preconditions": "Domyślne 3; Orzo ma 180 g dla 2 porcji.",
+      "steps": "Otwórz Orzo; wybierz 4 porcje; przejdź do gotowania; sprawdź ustawienia i edycję bazowego przepisu.",
+      "expected": "270 g na wejściu, 360 g dla 4; gotowanie używa 4; preferencja nadal 3; baza 180 g / 2.",
+      "evidence": "Zrzuty wszystkich wartości",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M09",
+      "title": "Preferencje i szkic",
+      "preconditions": "Domyślne 3.",
+      "steps": "W Dodaj wpisz tytuł. Zmień preferencję na 4. Wróć do szkicu, następnie Wyczyść i potwierdź.",
+      "expected": "Szkic zachowuje 3 oraz tytuł; nowy czysty formularz zaczyna od 4.",
+      "evidence": "Nagranie",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M10",
+      "title": "Wyszukiwanie i filtry",
+      "preconditions": "Przykładowe przepisy dostępne.",
+      "steps": "Szukaj losos cytryna. Następnie wyczyść, ustaw do 15 min, śniadania, dieta wegetariańska; sprawdź anulowanie i zatwierdzenie filtrów.",
+      "expected": "Pierwsze zapytanie zwraca łososia; filtry dają tost i owsiankę; anulowanie nie zmienia filtrów.",
+      "evidence": "Zrzuty wyników",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M11",
+      "title": "Trwałość po restarcie",
+      "preconditions": "Utwórz Test ryżu, polub go i ustaw preferencję 4.",
+      "steps": "Zamknij proces aplikacji z przełącznika, uruchom ponownie.",
+      "expected": "Przepis, polubienie i preferencja zachowane. Nie testować na efemerycznej bazie UI-testów.",
+      "evidence": "Nagranie restartu",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M12",
+      "title": "Pusta książka",
+      "preconditions": "Osobna testowa instalacja bez prywatnych danych.",
+      "steps": "Usuń wszystkie przepisy; uruchom ponownie; sprawdź Start, Szukaj, Ulubione.",
+      "expected": "Puste stany czytelne, przykłady nie wracają; dodanie nowego przepisu nadal działa.",
+      "evidence": "Zrzut po restarcie",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M13",
+      "title": "Zdjęcie",
+      "preconditions": "Testowy przepis i zdjęcie w bibliotece.",
+      "steps": "Dodaj zdjęcie; zapisz; uruchom ponownie; edytuj i usuń zdjęcie.",
+      "expected": "Zdjęcie poprawnie obrócone i trwałe; usunięcie daje placeholder.",
+      "evidence": "Zrzuty",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M14",
+      "title": "Film wrapa",
+      "preconditions": "Wrap z kurczakiem, głośność słyszalna.",
+      "steps": "Obejrzyj film; odtwórz do końca, pauzuj, przewiń, wyjdź podczas odtwarzania i otwórz ponownie.",
+      "expected": "Widoczny obraz, prawidłowy dźwięk jeśli obecny w pliku; brak awarii; po wyjściu dźwięk nie trwa.",
+      "evidence": "Nagranie i obserwacja dźwięku",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M15",
+      "title": "Audio wrapa",
+      "preconditions": "Wrap z kurczakiem, głośność słyszalna.",
+      "steps": "Instrukcja audio; odtwórz do końca, uruchom drugi raz, pauzuj i przewiń; zamknij odtwarzacz.",
+      "expected": "Słyszalna instrukcja, około 21,92 s; suwak i pauza działają; zamknięcie zatrzymuje audio.",
+      "evidence": "Nagranie i obserwacja słuchowa",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M16",
+      "title": "Offline i aktualizacja",
+      "preconditions": "Dla migracji: wcześniejsza instalacja bez mediów i zapisane własne dane.",
+      "steps": "Zainstaluj nową wersję bez odinstalowania. Sprawdź wrap, własne przepisy; włącz tryb samolotowy i odtwórz oba media.",
+      "expected": "Dane zachowane; brakujące media uzupełnione; własne załączniki niezastąpione; materiały działają offline.",
+      "evidence": "Zrzuty przed/po i nagranie offline",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M17",
+      "title": "Gotowanie",
+      "preconditions": "Otwarty przepis z kilkoma krokami.",
+      "steps": "Zaznacz składnik, zaznacz i odznacz krok, zakończ gotowanie i wróć do przepisu.",
+      "expected": "Znaczniki i licznik postępu zgodne; poprawny powrót po komunikacie.",
+      "evidence": "Nagranie",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M18",
+      "title": "Układ i dostępność",
+      "preconditions": "Mały iPhone oraz iPad lub symulator; duży tekst; VoiceOver.",
+      "steps": "Otwórz listy i formularz, obróć ekran, wyświetl klawiaturę; przejdź po sercu, porcji i odtwarzaczu VoiceOver.",
+      "expected": "Brak zasłoniętych krytycznych kontrolek; treść przewijalna; etykiety i stany zrozumiałe.",
+      "evidence": "Zrzuty z rozmiarami ekranów i notatka VoiceOver",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M19",
+      "title": "Tło i seria operacji",
+      "preconditions": "Zwykła instalacja testowa.",
+      "steps": "10 razy: otwórz przepis, zmień porcje, polub, wróć; dodaj i usuń testowy przepis. Przenieś aplikację do tła i wróć.",
+      "expected": "Brak awarii, duplikatów i utraty zapisanych danych; interfejs reaguje. To próba stabilności, nie benchmark.",
+      "evidence": "Nagranie i ewentualne logi awarii",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    },
+    {
+      "id": "M20",
+      "title": "Przepis dnia",
+      "preconditions": "Przykłady w bazie; znany przepis dnia.",
+      "steps": "Zanotuj wybór; uruchom ponownie tego samego dnia; usuń ten przepis i sprawdź Start.",
+      "expected": "Wybór stabilny tego samego dnia; po usunięciu wskazuje dostępny przepis. Przejście przez północ wymaga oddzielnej obserwacji.",
+      "evidence": "Zrzuty z datą i godziną",
+      "status": "NIEWYKONANY",
+      "actual": "Brak uruchomienia na iOS.",
+      "tester": "",
+      "date": "",
+      "device": ""
+    }
+  ]
+}
