@@ -3,17 +3,6 @@
 Natywna książka kucharska w SwiftUI ze stałym lokalnym zapisem SwiftData.
 Projekt zachowuje konfigurację z main: Xcode 27, deployment target iOS 27.0, iPhone i iPad.
 
-## Uruchomienie
-
-1. Otwórz `CookBook.xcodeproj` na Macu i wybierz schemat **CookBook**.
-2. Wybierz dostępny symulator zgodny z iOS 27.0 lub nowszym i użyj **Cmd+R**.
-3. Dla fizycznego urządzenia wybierz własny Team w **Signing & Capabilities**.
-4. Uruchom testy przez **Cmd+U**. Wspólny schemat zawiera testy logiki, bazy i interfejsu.
-
-Alternatywnie: `bash Scripts/verify_on_mac.sh UDID_SYMULATORA`.
-Wywołanie skryptu bez argumentu pokazuje dostępne urządzenia. Skrypt zapisuje logi,
-wynik `.xcresult` i wykonuje dodatkowo budowanie Release dla symulatora.
-
 ## Stan weryfikacji po audycie 21.11.2026
 
 Wykonano przegląd kodu i kontrole statyczne na Windows. Kompilacja Xcode,
