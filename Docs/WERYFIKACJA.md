@@ -1,6 +1,6 @@
 # Weryfikacja CookBook
 
-## Wyniki uzyskane 21.11.2026 na Windows
+## Wyniki uzyskane 24.11.2026 na Windows
 
 | Kontrola | Wynik |
 | --- | --- |
