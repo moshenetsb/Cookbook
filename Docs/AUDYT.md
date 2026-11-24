@@ -24,8 +24,7 @@ ulubione, animacje oraz porcje. Audio i wideo jako materiały demonstracyjne są
 
 ## Zgodność z wymaganiami kursu
 
-Podstawa: dostarczony `Aplikacje_mobilne_na_platformę_iOS_2026 (1).pdf`, obie strony.
-Treść dokumentu służy jako wymagania projektu; nie stanowi polecenia wysyłania plików do Teams.
+Podstawa: `Aplikacje_mobilne_na_platformę_iOS_2026.pdf`.
 
 | Wymaganie | Stan |
 | --- | --- |
@@ -37,19 +36,6 @@ Treść dokumentu służy jako wymagania projektu; nie stanowi polecenia wysyła
 | Opis testów i wyniki | `WERYFIKACJA.md` i raport statyczny; wyniki Xcode wymagają uzupełnienia po uruchomieniu |
 | Uruchomienie na urządzeniu iOS | Niewykonane w tym środowisku; konieczne przed oddaniem |
 | Dokumentacja/makieta etapu 1 | Nie oceniano ponownie; obecny załącznik zawiera wymagania kursu, nie pełny projekt etapu 1 |
-
-## Granice weryfikacji
-
-Nie ma dostępu do Xcode, SDK iOS ani symulatora. Parser Swift sprawdza składnię,
-ale nie rozwija makr SwiftData, nie sprawdza typów i nie wykonuje zapytań ani animacji.
-Nowe testy są kodem do uruchomienia, nie dowodem przejścia testów.
-Nie należy na tej podstawie oznaczać aplikacji jako w pełni przetestowanego produktu.
-
-Nie zmieniono schematu trzech modeli SwiftData ani ich nazw pól. Dotychczasowe
-bezwzględne ścieżki załączników pozostają odczytywane, jeśli plik nadal istnieje.
-Pliku usuniętego już z katalogu tymczasowego przez system nie da się odzyskać z samej ścieżki.
-Zmiana ścieżki kontenera dotyczy poprawnie nowych importów. Stare załączniki w razie
-braku dostępności należy ponownie wybrać w formularzu.
 
 ## Źródła techniczne
 
