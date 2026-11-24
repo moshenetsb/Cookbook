@@ -36,10 +36,9 @@ wyników testów oraz sprawdzenie odtwarzania dołączonego filmu i audio.
 
 ## Pochodzenie
 
-Baza robocza: lokalny folder pobrany z `moshenetsb/Cookbook`, po integracji SwiftData.
+Baza robocza Main: `moshenetsb/Cookbook`.
 Kontekst porównania: [scalenie SwiftData](https://github.com/moshenetsb/Cookbook/commit/25e1b3faa478107ca0e612b5994bc161e2fc8b11)
 oraz [wcześniejsza integracja interfejsu](https://github.com/moshenetsb/Cookbook/commit/a52c75570b559d15fba37181c06e445f7b92a3f0).
-Poprawki z audytu przygotowano lokalnie; nie publikowano ich w GitHub.
 
 ## Schemat bazy danych
 
