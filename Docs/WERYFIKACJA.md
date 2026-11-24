@@ -20,7 +20,7 @@
 Dokładny raport i sumy plików źródłowych: `static-validation.json`.
 Kontrola statyczna nie jest substytutem kompilacji, testów ani przeglądu wizualnego.
 
-## Uruchomienie na Macu
+## Brakujące testy na Macu
 
 1. Otwórz `CookBook.xcodeproj` w Xcode 27 lub zgodnym nowszym wydaniu.
 2. Wybierz schemat CookBook i dostępny symulator iOS zgodny z targetem 27.0.
