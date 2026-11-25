@@ -137,7 +137,6 @@ struct HomeView: View {
 }
 
 private struct FeaturedRecipeCard: View {
-    @AppStorage("defaultServings") private var defaultServings = 1
     let recipe: Recipe
 
     var body: some View {
@@ -153,7 +152,7 @@ private struct FeaturedRecipeCard: View {
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 12) {
                     Text(recipe.title).font(.title2.bold())
-                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(ServingPreferences.normalizedDefault(defaultServings)) por. · \(recipe.diet.rawValue)")
+                    Text("\(recipe.preparationTime) min · \(recipe.difficulty.rawValue) · \(recipe.diet.rawValue)")
                         .font(.caption)
                 }
                 .foregroundStyle(.white).padding(16)
