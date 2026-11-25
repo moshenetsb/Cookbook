@@ -26,6 +26,12 @@ final class Ingredient {
         self.order = 0
     }
 
+    var editableQuantity: String {
+        guard let amount else { return unit }
+        let number = String(amount).replacingOccurrences(of: ".", with: ",")
+        return [number, unit].filter { !$0.isEmpty }.joined(separator: " ")
+    }
+
     func quantity(for servings: Int, baseServings: Int) -> String {
         guard let amount else { return unit }
         let scaled = amount * Double(max(servings, 1)) / Double(max(baseServings, 1))

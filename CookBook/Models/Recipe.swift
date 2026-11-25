@@ -28,22 +28,22 @@ final class Recipe {
 
     var video: MediaAttachment? {
         get {
-            guard let videoPath, let videoFileName else { return nil }
-            return MediaAttachment(kind: .video, fileName: videoFileName, url: URL(fileURLWithPath: videoPath))
+            guard let videoPath, let videoFileName, let url = MediaImporter.resolve(videoPath) else { return nil }
+            return MediaAttachment(id: id, kind: .video, fileName: videoFileName, url: url)
         }
         set {
-            videoPath = newValue?.url.path
+            videoPath = newValue.map { MediaImporter.storedPath(for: $0.url) }
             videoFileName = newValue?.fileName
         }
     }
 
     var audio: MediaAttachment? {
         get {
-            guard let audioPath, let audioFileName else { return nil }
-            return MediaAttachment(kind: .audio, fileName: audioFileName, url: URL(fileURLWithPath: audioPath))
+            guard let audioPath, let audioFileName, let url = MediaImporter.resolve(audioPath) else { return nil }
+            return MediaAttachment(id: id, kind: .audio, fileName: audioFileName, url: url)
         }
         set {
-            audioPath = newValue?.url.path
+            audioPath = newValue.map { MediaImporter.storedPath(for: $0.url) }
             audioFileName = newValue?.fileName
         }
     }
@@ -86,9 +86,9 @@ final class Recipe {
         self.imageData = imageData
         self.isFavorite = isFavorite
         self.createdAt = createdAt
-        self.videoPath = video?.url.path
+        self.videoPath = video.map { MediaImporter.storedPath(for: $0.url) }
         self.videoFileName = video?.fileName
-        self.audioPath = audio?.url.path
+        self.audioPath = audio.map { MediaImporter.storedPath(for: $0.url) }
         self.audioFileName = audio?.fileName
     }
 }

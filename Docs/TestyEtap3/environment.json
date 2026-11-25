@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-11-21T19:02:49+01:00",
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "ffmpeg": "ffmpeg version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+  "xcodebuild": null,
+  "swift": null,
+  "revision_sha256": "ba818094b25424e4777007b1729fe2223156846ec3fdfb936d0b31c9b5258dce",
+  "source_folder": "C:\\Users\\Szyme\\Desktop\\Cookbook-main\\Cookbook-main"
+}

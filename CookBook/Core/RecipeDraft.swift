@@ -5,17 +5,18 @@ struct IngredientDraft: Identifiable, Equatable, Sendable {
     var name: String
     var quantity: String
 
-    init(name: String = "", quantity: String = "") {
-        id = UUID()
+    init(id: UUID = UUID(), name: String = "", quantity: String = "") {
+        self.id = id
         self.name = name
         self.quantity = quantity
     }
 
     var isEmpty: Bool { name.trimmed.isEmpty && quantity.trimmed.isEmpty }
 
+    @MainActor
     func makeIngredient() -> Ingredient? {
         guard !name.trimmed.isEmpty, let parsed = Self.parseQuantity(quantity) else { return nil }
-        return Ingredient(name.trimmed, parsed.amount, parsed.unit)
+        return Ingredient(id: id, name: name.trimmed, amount: parsed.amount, unit: parsed.unit)
     }
 
     // Obsługuje np. „250 g”, „1,5 łyżki”, „1/2 szt.” oraz „do smaku”.
@@ -24,7 +25,7 @@ struct IngredientDraft: Identifiable, Equatable, Sendable {
         guard !text.isEmpty else { return nil }
         guard let first = text.first else { return nil }
         if first.isLetter { return (nil, text) }
-        let pattern = #"^(\d+(?:[.,]\d+)?(?:/\d+(?:[.,]\d+)?)?)\s*([^\d].*)?$"#
+        let pattern = #"^(\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?(?:/\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?)?)\s*([^\d].*)?$"#
         guard let expression = try? NSRegularExpression(pattern: pattern),
               let match = expression.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)),
               let numberRange = Range(match.range(at: 1), in: text) else { return nil }
@@ -36,20 +37,21 @@ struct IngredientDraft: Identifiable, Equatable, Sendable {
         guard amount.isFinite, amount > 0 else { return nil }
         let unitRange = Range(match.range(at: 2), in: text)
         let unit = unitRange.map { String(text[$0]).trimmed } ?? ""
-        if unit.first?.isNumber == true { return nil }
+        // Odrzuć m.in. „1/2/3”, „1..5”, „1-2 g” i „1 1/2 szklanki”.
+        if let first = unit.first, !first.isLetter { return nil }
         return (amount, unit)
     }
 }
 
 struct StepDraft: Identifiable, Equatable, Sendable {
-    let id = UUID()
+    var id = UUID()
     var title = ""
     var instruction = ""
 
     var isEmpty: Bool { title.trimmed.isEmpty && instruction.trimmed.isEmpty }
 }
 
-enum RecipeValidationIssue: Equatable {
+enum RecipeValidationIssue: Equatable, Sendable {
     case titleRequired
     case invalidPreparationTime
     case invalidServings
@@ -68,9 +70,9 @@ enum RecipeValidationIssue: Equatable {
         case .invalidServings:
             return "Liczba porcji musi wynosić od 1 do 100"
         case .ingredientsRequired:
-            return "Dodaj przynajmniej jeden składnik."
+            return "Dodaj przynajmniej jeden składnik"
         case .ingredientNameRequired:
-            return "Podaj nazwę składnika."
+            return "Podaj nazwę składnika"
         case .invalidIngredientQuantity:
             return "Podaj poprawną ilość, np. 250 g lub do smaku"
         case .stepsRequired:
@@ -81,14 +83,14 @@ enum RecipeValidationIssue: Equatable {
     }
 }
 
-struct IngredientFieldValidation: Equatable {
+struct IngredientFieldValidation: Equatable, Sendable {
     var name: RecipeValidationIssue? = nil
     var quantity: RecipeValidationIssue? = nil
 
     var isValid: Bool { name == nil && quantity == nil }
 }
 
-struct RecipeValidation: Error, Equatable {
+struct RecipeValidation: Error, Equatable, Sendable {
     var title: RecipeValidationIssue? = nil
     var preparationTime: Int? = nil
     var preparationTimeIssue: RecipeValidationIssue? = nil
@@ -147,7 +149,7 @@ struct RecipeDraft: Equatable {
 
     init(recipe: Recipe? = nil, defaultServings: Int = 1) {
         original = recipe
-        servings = String(defaultServings)
+        servings = String(ServingPreferences.normalizedDefault(defaultServings))
         guard let recipe else { return }
         title = recipe.title
         summary = recipe.summary
@@ -157,9 +159,10 @@ struct RecipeDraft: Equatable {
         difficulty = recipe.difficulty
         diet = recipe.diet
         ingredients = recipe.ingredients.sorted { $0.order < $1.order }.map {
-            IngredientDraft(name: $0.name, quantity: $0.quantity(for: recipe.servings, baseServings: recipe.servings))
+            // Format widoku zaokrągla do 2 miejsc; edytor musi zachować pełną ilość.
+            IngredientDraft(id: $0.id, name: $0.name, quantity: $0.editableQuantity)
         }
-        steps = recipe.steps.sorted { $0.order < $1.order }.map { StepDraft(title: $0.title, instruction: $0.instruction) }
+        steps = recipe.steps.sorted { $0.order < $1.order }.map { StepDraft(id: $0.id, title: $0.title, instruction: $0.instruction) }
         imageName = recipe.imageName
         imageData = recipe.imageData
         video = recipe.video
@@ -223,24 +226,24 @@ struct RecipeDraft: Equatable {
         }
 
         let preparation = steps.filter { !$0.isEmpty }.enumerated().map { index, step in
-            PreparationStep(step.title.trimmed.isEmpty ? "Krok \(index + 1)" : step.title.trimmed, step.instruction.trimmed)
+            PreparationStep(id: step.id, title: step.title.trimmed.isEmpty ? "Krok \(index + 1)" : step.title.trimmed, instruction: step.instruction.trimmed)
         }
         let recipe = Recipe(
-            id: original?.id ?? UUID(), 
-            title: title.trimmed, 
+            id: original?.id ?? UUID(),
+            title: title.trimmed,
             summary: summary.trimmed,
-            category: category, 
-            diet: diet, 
-            preparationTime: minutes, 
+            category: category,
+            diet: diet,
+            preparationTime: minutes,
             difficulty: difficulty,
-            servings: portions, 
+            servings: portions,
             ingredients: ingredients.compactMap { $0.makeIngredient() },
-            steps: preparation, 
-            imageName: imageName, 
+            steps: preparation,
+            imageName: imageName,
             imageData: imageData,
             isFavorite: original?.isFavorite ?? false,
-            createdAt: original?.createdAt ?? .now, 
-            video: video, 
+            createdAt: original?.createdAt ?? .now,
+            video: video,
             audio: audio
         )
         return .success(recipe)

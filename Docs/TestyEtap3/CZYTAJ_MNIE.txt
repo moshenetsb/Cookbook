@@ -1,0 +1,29 @@
+COOKBOOK - PAKIET TESTOW ETAPU 3
+
+Raport_testow_CookBook.pdf - raport częściowy, 11 stron.
+wyniki.json - 8 wykonanych kontroli, 33 niewykonane testy XCTest,
+              20 niewykonanych scenariuszy ręcznych.
+przypadki-reczne.csv - protokół do uzupełnienia po wykonaniu na iOS;
+                      UTF-8, separator średnik.
+manifest-sha256.json - identyfikacja badanych plików aplikacji i testów.
+environment.json - rzeczywiste środowisko i czas kontroli.
+static-run.log - wynik analizy statycznej.
+decode-mp4.log, decode-wav.log - pełne dekodowanie przez FFmpeg.
+info-mp4.log, info-wav.log - metadane plików.
+audio-pcm.json, media-copy.json - kontrola nagrania i oryginalnych plików.
+
+Nie oznaczaj niewykonanych testów jako PASS. Ten raport nie potwierdza jeszcze
+działania aplikacji na iOS ani pełnego zaliczenia etapu 3.
+
+Testy na Macu: otwórz CookBook.xcodeproj, wybierz schemat CookBook i użyj Cmd+U.
+Alternatywnie: bash Scripts/verify_on_mac.sh UDID_SYMULATORA.
+Skrypt pokazuje listę dostępnych urządzeń po uruchomieniu bez argumentu.
+
+Przed wypełnieniem CSV zachowaj kopię oryginalnego raportu i wyników.
+Generator Scripts/generate_test_report.py odtwarza raport z kontroli Windows
+i ponownie wpisuje NIEWYKONANY przy testach iOS; nie importuje wyników .xcresult.
+Nie uruchamiaj go nad ręcznie uzupełnionymi wynikami. Korzysta z fontów Arial
+w katalogu C:\Windows\Fonts oraz zależności podanych w nagłówku skryptu.
+
+Po testach iOS dołącz .xcresult, zrzuty i rzeczywiste wyniki. Zaktualizuj raport,
+zachowując identyfikator testowanej wersji i opis nierozwiązanych błędów.

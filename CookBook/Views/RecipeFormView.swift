@@ -21,6 +21,7 @@ struct RecipeFormView: View {
     @State private var validation: RecipeValidation?
     @State private var confirmsDiscard = false
     @State private var hasAppeared = false
+    @State private var importedURLs: [URL] = []
 
     init(recipe: Recipe? = nil, onSaved: ((Recipe) -> Void)? = nil) {
         self.recipe = recipe
@@ -51,6 +52,11 @@ struct RecipeFormView: View {
                 mediaSection
 
                 Section {
+                    if let validation, !validation.isValid {
+                        Label("Uzupełnij wymagane pola", systemImage: "exclamationmark.circle")
+                            .font(.subheadline).foregroundStyle(.red)
+                            .accessibilityIdentifier("recipeValidationSummary")
+                    }
                     Button(recipe == nil ? "Zapisz przepis" : "Zapisz zmiany", action: save)
                         .buttonStyle(PrimaryButtonStyle())
                         .disabled(isBusy)
@@ -78,6 +84,12 @@ struct RecipeFormView: View {
                 if recipe == nil { reset() }
             }
             .interactiveDismissDisabled(isDirty || isBusy)
+            .onDisappear {
+                // Szkic w zakładce Dodaj zostaje przy zmianie zakładek.
+                if let recipe, !isDirty && !isBusy {
+                    discardImports(keeping: [recipe.video?.url, recipe.audio?.url].compactMap { $0 })
+                }
+            }
             .onChange(of: defaultServings) { _, _ in
                 if recipe == nil && !isDirty { reset() }
             }
@@ -149,6 +161,7 @@ struct RecipeFormView: View {
                     TextField(String(recipe?.servings ?? defaultServings), text: $draft.servings)
                         .keyboardType(.numberPad).multilineTextAlignment(.trailing)
                         .accessibilityLabel("Liczba porcji")
+                        .accessibilityIdentifier("recipeServings")
                 }
                 if let validation { validationMessage(validation.servingCountIssue?.message) }
             }
@@ -190,7 +203,7 @@ struct RecipeFormView: View {
             Text("Składniki")
         } footer: {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Ilości są zapisywane dla liczby porcji ustawionej w przepisie. W widokach przepisu będą przeliczane względem porcji z ustawień.")
+                Text("Podaj ilości dla liczby porcji wpisanej powyżej. W szczegółach składniki są przeliczane dla wybranej liczby porcji; zapisane ilości pozostają bez zmian.")
                 if let validation { validationMessage(validation.ingredientsIssue?.message) }
             }
         }
@@ -230,11 +243,11 @@ struct RecipeFormView: View {
                     .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.borderless).font(.subheadline).disabled(isBusy)
-            if isImporting { ProgressView("Wczytywanie pliku…") }
+            if isImporting { ProgressView("Wczytywanie pliku...") }
             if let video = draft.video { attachmentRow(video) { draft.video = nil } }
             if let audio = draft.audio { attachmentRow(audio) { draft.audio = nil } }
             if draft.video == nil && draft.audio == nil {
-                Text("Nie dodano żadnych plików.").font(.caption).foregroundStyle(.secondary)
+                Text("Nie dodano żadnych plików").font(.caption).foregroundStyle(.secondary)
             }
         }
     }
@@ -261,8 +274,9 @@ struct RecipeFormView: View {
             do {
                 guard let url = try result.get().first else { return }
                 let attachment = try await Task.detached(priority: .userInitiated) {
-                    try MediaImporter.copyToSession(url, kind: kind)
+                    try MediaImporter.copyToLibrary(url, kind: kind)
                 }.value
+                importedURLs.append(attachment.url)
                 if kind == .video { draft.video = attachment } else { draft.audio = attachment }
             } catch {
                 if (error as NSError).code != NSUserCancelledError { errorMessage = error.localizedDescription }
@@ -294,39 +308,39 @@ struct RecipeFormView: View {
     }
 
     private func save() {
-        let savedRecipe: Recipe
-        switch draft.makeRecipe() {
-        case .success(let recipe):
-            savedRecipe = recipe
-            validation = nil
-        case .failure(let errors):
+        let errors = draft.validate()
+        guard errors.isValid else {
             validation = errors
             return
         }
-
-        if let recipe {
-            modelContext.delete(recipe)
-        }
-        modelContext.insert(savedRecipe)
+        let savedRecipe: Recipe
         do {
-            try modelContext.save()
+            savedRecipe = try RecipePersistence.save(draft, in: modelContext)
+            validation = nil
         } catch {
-            modelContext.rollback()
             errorMessage = "Nie udało się zapisać przepisu. \(error.localizedDescription)"
             return
         }
+        discardImports(keeping: [savedRecipe.video?.url, savedRecipe.audio?.url].compactMap { $0 })
         if recipe == nil { reset() } else { dismiss() }
         onSaved?(savedRecipe)
     }
 
     private func reset() {
-        draft = RecipeDraft(defaultServings: min(max(defaultServings, 1), 12))
+        discardImports()
+        draft = RecipeDraft(defaultServings: defaultServings)
         initialDraft = draft
         selectedPhoto = nil
         validation = nil
     }
 
     private func cancel() {
+        discardImports()
         if recipe == nil { reset() } else { dismiss() }
+    }
+
+    private func discardImports(keeping retained: [URL] = []) {
+        MediaImporter.removeUnused(importedURLs, keeping: Set(retained))
+        importedURLs.removeAll()
     }
 }

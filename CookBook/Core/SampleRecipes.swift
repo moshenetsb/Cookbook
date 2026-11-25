@@ -249,7 +249,6 @@ enum SampleRecipes {
             )
         ]
         return recipes.enumerated().map { index, recipe in
-            var recipe = recipe
             recipe.createdAt = Calendar.current.date(byAdding: .day, value: -index, to: Date()) ?? Date()
             return recipe
         }

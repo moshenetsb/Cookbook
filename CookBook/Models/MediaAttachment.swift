@@ -6,7 +6,7 @@ struct MediaAttachment: Identifiable, Equatable, Sendable {
     let fileName: String
     let url: URL
 
-    init(id: UUID = UUID(), kind: MediaKind, fileName: String, url: URL) {
+    nonisolated init(id: UUID = UUID(), kind: MediaKind, fileName: String, url: URL) {
         self.id = id
         self.kind = kind
         self.fileName = fileName

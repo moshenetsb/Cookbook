@@ -31,6 +31,7 @@ struct RecipeFilter: Equatable, Sendable {
             .filter { $0 }.count
     }
 
+    @MainActor
     func apply(to recipes: [Recipe], query: String = "") -> [Recipe] {
         let words = query.searchKey.split(whereSeparator: \.isWhitespace).map(String.init)
         let matches = recipes.filter { recipe in
@@ -67,9 +68,9 @@ struct RecipeFilter: Equatable, Sendable {
 }
 
 extension String {
-    var trimmed: String { trimmingCharacters(in: .whitespacesAndNewlines) }
+    nonisolated var trimmed: String { trimmingCharacters(in: .whitespacesAndNewlines) }
 
-    var searchKey: String {
+    nonisolated var searchKey: String {
         folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "pl_PL"))
             .replacingOccurrences(of: "ł", with: "l")
     }

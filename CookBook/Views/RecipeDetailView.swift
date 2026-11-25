@@ -7,9 +7,10 @@ struct RecipeDetailView: View {
     let recipeID: UUID
     @State private var checkedIngredients: Set<UUID> = []
     @State private var selectedMedia: MediaKind?
+    @State private var selectedServings: Int?
 
     private var displayServings: Int {
-        min(max(defaultServings, 1), 12)
+        selectedServings ?? ServingPreferences.normalizedDefault(defaultServings)
     }
 
     var body: some View {
@@ -29,6 +30,12 @@ struct RecipeDetailView: View {
         .navigationTitle("Przepis")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
+        .onAppear {
+            if selectedServings == nil {
+                selectedServings = ServingPreferences.normalizedDefault(defaultServings)
+            }
+        }
+        .onChange(of: displayServings) { _, _ in checkedIngredients.removeAll() }
     }
 
     private func details(_ recipe: Recipe) -> some View {
@@ -61,10 +68,11 @@ struct RecipeDetailView: View {
                 .padding(.vertical, 4)
                 Stepper("Porcje: \(displayServings)", value: Binding(
                     get: { displayServings },
-                    set: { defaultServings = min(max($0, 1), 12) }
-                ), in: 1...12)
+                    set: { selectedServings = $0 }
+                ), in: ServingPreferences.recipeRange)
                     .font(.subheadline)
                     .accessibilityIdentifier("servingsStepper")
+                    .accessibilityValue("\(displayServings)")
             }
             Section {
                 HStack(spacing: 10) {

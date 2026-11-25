@@ -1,0 +1,18 @@
+{
+  "kind": "static_analysis_only",
+  "swift_files_parsed": 27,
+  "xcode_targets": [
+    "CookBook",
+    "CookBookTests",
+    "CookBookUITests"
+  ],
+  "xcode_objects": 37,
+  "asset_images_verified": 19,
+  "unique_recipe_photos": 15,
+  "unit_and_integration_tests_defined": 29,
+  "ui_tests_defined": 4,
+  "xcode_build_executed": false,
+  "xctest_executed": false,
+  "ios_visual_verification_executed": false,
+  "errors": []
+}
