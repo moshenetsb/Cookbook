@@ -36,7 +36,7 @@ struct ContentView: View {
                 searchQuery = ""
                 selectedTab = .search
             })
-                .tabItem { Label("Dodaj", systemImage: "plus") }
+                .tabItem { Label("Dodaj", systemImage: "plus.circle") }
                 .tag(AppTab.add)
 
             SettingsView()
