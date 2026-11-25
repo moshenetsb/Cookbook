@@ -53,7 +53,7 @@ struct RecipeFormView: View {
 
                 Section {
                     if let validation, !validation.isValid {
-                        Label("Uzupełnij pola oznaczone na czerwono powyżej.", systemImage: "exclamationmark.circle")
+                        Label("Uzupełnij wymagane pola", systemImage: "exclamationmark.circle")
                             .font(.subheadline).foregroundStyle(.red)
                             .accessibilityIdentifier("recipeValidationSummary")
                     }
