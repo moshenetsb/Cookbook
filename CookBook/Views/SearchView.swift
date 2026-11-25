@@ -46,7 +46,7 @@ struct SearchView: View {
                     ContentUnavailableView {
                         Label("Brak wyników", systemImage: "magnifyingglass")
                     } description: {
-                        Text("Zmień zapytanie lub wyczyść filtry.")
+                        Text("Zmień zapytanie lub wyczyść filtry")
                     } actions: {
                         Button("Wyczyść wyszukiwanie i filtry") { query = ""; filter = RecipeFilter() }
                     }

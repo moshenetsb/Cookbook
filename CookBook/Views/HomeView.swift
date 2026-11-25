@@ -36,7 +36,7 @@ struct HomeView: View {
                         }
                         .buttonStyle(.plain)
                     } else {
-                        ContentUnavailableView("Twoja książka jest pusta", systemImage: "book.closed", description: Text("Dodaj pierwszy przepis w zakładce Dodaj."))
+                        ContentUnavailableView("Twoja książka jest pusta", systemImage: "book.closed", description: Text("Dodaj pierwszy przepis, aby zobaczyć go tutaj"))
                     }
                     if !quickRecipes.isEmpty {
                         HStack(alignment: .firstTextBaseline) {
