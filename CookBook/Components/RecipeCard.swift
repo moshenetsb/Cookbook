@@ -79,7 +79,7 @@ struct FavoriteButton: View {
         )) {
             Button("OK", role: .cancel) { errorMessage = nil }
         } message: {
-            Text(errorMessage ?? "Spróbuj ponownie.")
+            Text(errorMessage ?? "Spróbuj ponownie")
         }
     }
 
@@ -174,7 +174,7 @@ struct RecipeRow: View {
 
             Button("Anuluj", role: .cancel) {}
         } message: {
-            Text("Przepis zniknie również z ulubionych.")
+            Text("Przepis zniknie również z ulubionych")
         }
         .alert("Nie udało się zapisać zmian", isPresented: Binding(
             get: { errorMessage != nil },
@@ -182,7 +182,7 @@ struct RecipeRow: View {
         )) {
             Button("OK", role: .cancel) { errorMessage = nil }
         } message: {
-            Text(errorMessage ?? "Spróbuj ponownie.")
+            Text(errorMessage ?? "Spróbuj ponownie")
         }
     }
 

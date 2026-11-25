@@ -70,9 +70,9 @@ enum RecipeValidationIssue: Equatable, Sendable {
         case .invalidServings:
             return "Liczba porcji musi wynosić od 1 do 100"
         case .ingredientsRequired:
-            return "Dodaj przynajmniej jeden składnik."
+            return "Dodaj przynajmniej jeden składnik"
         case .ingredientNameRequired:
-            return "Podaj nazwę składnika."
+            return "Podaj nazwę składnika"
         case .invalidIngredientQuantity:
             return "Podaj poprawną ilość, np. 250 g lub do smaku"
         case .stepsRequired:

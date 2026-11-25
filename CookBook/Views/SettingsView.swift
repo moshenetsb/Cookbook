@@ -72,7 +72,7 @@ struct SettingsView: View {
                             .accessibilityLabel("Zwiększ domyślną liczbę porcji")
                         }
 
-                        Text("Początkowa liczba porcji w nowym przepisie i przy otwieraniu przepisu. Zmiana porcji w otwartym przepisie nie zmienia tego ustawienia.")
+                        Text("Początkowa liczba porcji w nowym przepisie i przy otwieraniu przepisu. Zmiana porcji w otwartym przepisie nie zmienia tego ustawienia")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

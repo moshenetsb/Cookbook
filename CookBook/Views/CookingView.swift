@@ -56,7 +56,7 @@ struct CookingView: View {
         .navigationBarTitleDisplayMode(.inline)
         .alert("Smacznego!", isPresented: $showsCompletion) {
             Button("Wróć do przepisu") { dismiss() }
-        } message: { Text("Gotowanie zakończone. Możesz wrócić do tego przepisu w dowolnej chwili.") }
+        } message: { Text("Gotowanie zakończone. Możesz wrócić do tego przepisu w dowolnej chwili") }
     }
 
     private func stepRow(_ step: PreparationStep, number: Int) -> some View {

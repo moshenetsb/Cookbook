@@ -243,11 +243,11 @@ struct RecipeFormView: View {
                     .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.borderless).font(.subheadline).disabled(isBusy)
-            if isImporting { ProgressView("Wczytywanie pliku…") }
+            if isImporting { ProgressView("Wczytywanie pliku...") }
             if let video = draft.video { attachmentRow(video) { draft.video = nil } }
             if let audio = draft.audio { attachmentRow(audio) { draft.audio = nil } }
             if draft.video == nil && draft.audio == nil {
-                Text("Nie dodano żadnych plików.").font(.caption).foregroundStyle(.secondary)
+                Text("Nie dodano żadnych plików").font(.caption).foregroundStyle(.secondary)
             }
         }
     }

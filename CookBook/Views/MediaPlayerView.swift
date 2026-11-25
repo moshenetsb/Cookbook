@@ -25,7 +25,7 @@ struct MediaPlayerView: View {
                     ContentUnavailableView(
                         kind == .video ? "Brak filmu" : "Brak nagrania",
                         systemImage: kind.symbol,
-                        description: Text("Ten przepis nie ma jeszcze załącznika. Możesz dodać własny plik podczas edycji przepisu.")
+                        description: Text("Ten przepis nie ma jeszcze załącznika. Możesz dodać własny plik podczas edycji przepisu")
                     )
                 }
             }
@@ -37,7 +37,7 @@ struct MediaPlayerView: View {
             .task {
                 guard kind == .video, let attachment else { return }
                 guard FileManager.default.fileExists(atPath: attachment.url.path) else {
-                    errorMessage = "Plik nie jest już dostępny. Dodaj go ponownie."
+                    errorMessage = "Plik nie jest już dostępny. Dodaj go ponownie"
                     return
                 }
                 do {
@@ -45,7 +45,7 @@ struct MediaPlayerView: View {
                     try AVAudioSession.sharedInstance().setActive(true)
                     let asset = AVURLAsset(url: attachment.url)
                     guard try await asset.load(.isPlayable) else {
-                        errorMessage = "Format lub kodowanie tego filmu nie jest obsługiwane."
+                        errorMessage = "Format lub kodowanie tego filmu nie jest obsługiwane"
                         return
                     }
                     videoPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
@@ -88,7 +88,7 @@ private struct AudioPlayerView: View {
                         player.pause()
                     } else {
                         if player.currentTime >= player.duration - 0.1 { player.currentTime = 0 }
-                        if !player.play() { errorMessage = "Nie udało się rozpocząć odtwarzania." }
+                        if !player.play() { errorMessage = "Nie udało się rozpocząć odtwarzania" }
                     }
                     isPlaying = player.isPlaying
                 }
