@@ -1,5 +1,0 @@
-[aist#0:0/pcm_s16le @ 0000029217925dc0] Guessed Channel Layout: mono
-Input #0, wav, from 'C:\Users\Szyme\Documents\ChatGPT\cookbook\Cookbook-main\CookBook\Resources\wrap_chicken.wav':
-  Duration: 00:00:21.92, bitrate: 768 kb/s
-  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, mono, s16, 768 kb/s
-At least one output file must be specified

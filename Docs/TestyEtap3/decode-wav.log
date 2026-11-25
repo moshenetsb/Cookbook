@@ -1,3 +1,0 @@
-Time: 2026-11-21T19:02:49+01:00
-Command: ['C:\\Users\\Szyme\\Documents\\ChatGPT\\cookbook\\tmp\\validation-deps\\imageio_ffmpeg\\binaries\\ffmpeg-win-x86_64-v9.0.2.exe', '-hide_banner', '-v', 'error', '-xerror', '-i', 'C:\\Users\\Szyme\\Documents\\ChatGPT\\cookbook\\Cookbook-main\\CookBook\\Resources\\wrap_chicken.wav', '-map', '0:v?', '-map', '0:a?', '-f', 'null', '-']
-Exit: 0
