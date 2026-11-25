@@ -124,35 +124,37 @@ struct RecipeRow: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("recipe-\(recipe.id.uuidString)")
-            FavoriteButton(recipe: recipe)
         }
 
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
-
-            Button {
+            Button(role: .destructive) {
                 confirmsDelete = true
             } label: {
-                Label("Usuń", systemImage: "trash")
+                Image(systemName: "trash")
             }
             .tint(.red)
-
+            .accessibilityLabel("Usuń przepis")
+            
             Button {
                 isEditing = true
             } label: {
-                Label("Edytuj", systemImage: "pencil")
+                Image(systemName: "pencil")
             }
             .tint(AppTheme.green)
-
+            .accessibilityLabel("Edytuj przepis")
+            
             Button {
-                do {
+                 do {
                     try withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
                         try RecipePersistence.toggleFavorite(recipe, in: modelContext)
                     }
                 } catch { errorMessage = error.localizedDescription }
             } label: {
-                Label(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych", systemImage: recipe.isFavorite ? "heart.slash" : "heart")
+                Image(systemName: recipe.isFavorite ? "heart.fill" : "heart")
+                    .contentTransition(.symbolEffect(.replace))
             }
-            .tint(.pink)
+            .accessibilityLabel(recipe.isFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych")
+            .tint(recipe.isFavorite ? .pink : .gray)
         }
 
         .sheet(isPresented: $isEditing) {
@@ -160,7 +162,7 @@ struct RecipeRow: View {
         }
 
         .confirmationDialog(
-            "Usunąć „\(recipe.title)”?",
+            "Usunąć \"\(recipe.title)\"?",
             isPresented: $confirmsDelete,
             titleVisibility: .visible
         ) {
