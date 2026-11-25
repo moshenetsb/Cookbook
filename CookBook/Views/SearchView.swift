@@ -81,8 +81,6 @@ struct FilterSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Text("Zawęź wyniki do swoich potrzeb").font(.subheadline).foregroundStyle(.secondary)
-                    .listRowBackground(Color.clear)
                 Section("Czas przygotowania") {
                     ForEach(PreparationTime.allCases) { time in
                         Button {
@@ -112,9 +110,13 @@ struct FilterSheet: View {
                     .listRowBackground(Color.clear)
                 }
                 Section("Dieta") {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 130))], alignment: .leading, spacing: 2) {
-                        ForEach(Diet.allCases) { diet in
-                            FilterChip(title: diet.rawValue, isSelected: draft.diet == diet) { draft.diet = diet }
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 6) {
+                            ForEach(Diet.allCases) { diet in
+                                FilterChip(title: diet.rawValue, isSelected: draft.diet == diet) {
+                                    draft.diet = diet
+                                }
+                            }
                         }
                     }
                     .listRowInsets(EdgeInsets())
