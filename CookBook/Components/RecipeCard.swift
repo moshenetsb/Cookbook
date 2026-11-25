@@ -127,7 +127,7 @@ struct RecipeRow: View {
         }
 
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
-            Button(role: .destructive) {
+            Button {
                 confirmsDelete = true
             } label: {
                 Image(systemName: "trash")
