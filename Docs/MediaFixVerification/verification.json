@@ -1,0 +1,88 @@
+{
+  "date": "2026-11-25",
+  "scope": "Windows host checks only",
+  "xcode_build_executed": false,
+  "xctest_executed": false,
+  "source": "C:\\Users\\Szyme\\Desktop\\Cookbook-main",
+  "media": {
+    "wrap_chicken.wav": {
+      "bytes": 2104364,
+      "sha256": "9bc00b17d8e2a8cbf6d7ea84ed6efb0b9ee7bd4c4efb9ccd606feab78607cebf",
+      "full_decode_exit_code": 0,
+      "duration": 21.92,
+      "channels": 1,
+      "sample_rate": 48000,
+      "sample_width": 2
+    },
+    "wrap_chicken.mp4": {
+      "bytes": 6400753,
+      "sha256": "33adb518134d0c03c6b821b917a277620928f1feeaa0a590eb4e44b62f9a3d53",
+      "full_decode_exit_code": 0
+    }
+  },
+  "changes": [
+    {
+      "path": "README.md",
+      "before": "ec9dcef31fc3cbad332984fbdde3c9def12fb90aeb0c6619db6b9ff0b58de312",
+      "after": "f6333131ab08618f1e15ecb8c508496330eda724fdea510a508cd04234e44fa8"
+    },
+    {
+      "path": "CookBookTests/MediaPlaybackTests.swift",
+      "before": null,
+      "after": "b81111d7e1a868f054f8644049bc30362dd81e916ffe5b7fc9e19e2a4796f2ab"
+    },
+    {
+      "path": "CookBookUITests/RecipeFlowUITests.swift",
+      "before": "236f0b989c37722c04337997f40ae188a4a1e41464695b384dc3c97ea26c3212",
+      "after": "2e65cb73eea46fe89445d837f5da7cfe54a9b65e352c0ba8b1d889513c374f8c"
+    },
+    {
+      "path": "Docs/MULTIMEDIA.md",
+      "before": "5e33783552e71da7a48ea9b146266f09cacf4d356047ba50506ca5bf11894c04",
+      "after": "f786b2207d6a6daf7e0dee5ba608b695e3028fc0f1ff837736bdb69519bd3e12"
+    },
+    {
+      "path": "Docs/NAPRAWA_MEDIA_2026-11-25.md",
+      "before": null,
+      "after": "c3da98369a018640def6d1e613b16c1dfe991eec0268eef4b141729fc645d464"
+    },
+    {
+      "path": "Docs/static-validation.json",
+      "before": "ad8c2b2898df42d61e8e2d9fb6f3a5f1b730d9a87c4473af748422c7cd58d4e6",
+      "after": "15ffe77009901a162150a78dfe371c94b32f632de011823e4c76c760d092d145"
+    },
+    {
+      "path": "Docs/WERYFIKACJA.md",
+      "before": "39de3ca34393b6d51cf0077fa9c5b245894477afe87d187a9e979c554358ffd1",
+      "after": "e339300e0aa8babae90da796603c8b0aab656bc1903eccc680241778b56ea745"
+    },
+    {
+      "path": "Scripts/verify_project.py",
+      "before": "77fdf68afcb9a2b175191a61d3828dc2082096207a2231e6be46b3fe8689ce1e",
+      "after": "80b111d43dc152eeedc344ce2fb101056e6e718132bc8ce09371da83834ff59c"
+    },
+    {
+      "path": "CookBook/Services/BundledRecipeMedia.swift",
+      "before": null,
+      "after": "bab3d82a8bff571820c06eb37569958afacc4360edf861d3305f8475a724ed29"
+    },
+    {
+      "path": "CookBook/Services/MediaPlaybackSession.swift",
+      "before": null,
+      "after": "036e801ab7e1bcc48c146e1e2d8b02de6308611f6995ae153358b653a37635b5"
+    },
+    {
+      "path": "CookBook/Views/MediaPlayerView.swift",
+      "before": "585bfa20995cb8bfbb064fb5ea8fb14bb83603bb56524bfb035d4ec5aea52b05",
+      "after": "f20b5b9ce75163921416e956062e44d71ac73b4b19671680a354e97d8bebb2b8"
+    },
+    {
+      "path": "CookBook/Views/RecipeDetailView.swift",
+      "before": "1503464ee54bb3ff4eb2d1b820320cc55dc8d530e248cf79a3442e2e04f493d7",
+      "after": "486b7894959063d67867a59f5d4ba45c70564dfec85d21d928dcdeb1c2887fbe"
+    }
+  ],
+  "deleted_files": [],
+  "other_application_files_byte_identical": true,
+  "detail_view_only_media_argument_changed": true
+}

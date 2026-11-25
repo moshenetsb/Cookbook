@@ -1,0 +1,60 @@
+{
+  "kind": "static_analysis_only",
+  "swift_files_parsed": 30,
+  "xcode_targets": [
+    "CookBook",
+    "CookBookTests",
+    "CookBookUITests"
+  ],
+  "xcode_objects": 37,
+  "asset_images_verified": 19,
+  "unique_recipe_photos": 15,
+  "unit_and_integration_tests_defined": 31,
+  "ui_tests_defined": 5,
+  "bundled_media": {
+    "wrap_chicken.mp4": {
+      "bytes": 6400753,
+      "sha256": "33adb518134d0c03c6b821b917a277620928f1feeaa0a590eb4e44b62f9a3d53"
+    },
+    "wrap_chicken.wav": {
+      "bytes": 2104364,
+      "sha256": "9bc00b17d8e2a8cbf6d7ea84ed6efb0b9ee7bd4c4efb9ccd606feab78607cebf"
+    }
+  },
+  "xcode_build_executed": false,
+  "xctest_executed": false,
+  "ios_visual_verification_executed": false,
+  "errors": [],
+  "source_sha256": {
+    "CookBook/App/ContentView.swift": "e8890e6a726a69893c5cff730017406da71602a874937bdd7622addd69295b06",
+    "CookBook/App/CookBookApp.swift": "ee9b21499ff18197c2e9d4cac86a41054982fb0e734d3703b4105efc62501af1",
+    "CookBook/Components/AppTheme.swift": "668597d2a34f7dcdfa7ce52351daec2e5ccaf2b7863938ff7766add657ab54af",
+    "CookBook/Components/RecipeCard.swift": "486f977caf204f64d7ddbb767d96d0a68d02607b7544cc5613c3d552ab2e752e",
+    "CookBook/Core/RecipeDraft.swift": "5331819ff704c7273c92ccde4d1102dc273b41b00402fb326da10ae27ed9c7fb",
+    "CookBook/Core/RecipeFilter.swift": "7eaf9d6ae266c755677d23e9194907d62c9039806e8fd8999bd56c8401fba201",
+    "CookBook/Core/SampleRecipes.swift": "d5edb99e00a21ec463053da58ba176b1a03dd34f44f5b405e8e2c979ce0b071f",
+    "CookBook/Core/ServingPreferences.swift": "e4a767ddc88496e7553407496583069c5334c51f980dd5f7fe52d8e8e102ccdb",
+    "CookBook/Models/Enums.swift": "9e8542957459446dc3c62151501f6e55caa02341811b83feb6a4a9429b635ebe",
+    "CookBook/Models/Ingredient.swift": "12b4e37ff159ac9bb1ff9faf56c44d887858fe0235b49cb8011f89e4c7f26d19",
+    "CookBook/Models/MediaAttachment.swift": "f49d9668129ace0a34a0255886d9bbfdca215067fb7ea4fcfdc53cd70ec55abf",
+    "CookBook/Models/PreparationStep.swift": "6ed03611bb6492aad2215b6332f7cecee58a90b3b0cc44545bd14d826168a81b",
+    "CookBook/Models/Recipe.swift": "7aa21134c1a3d86ac1330f414b3e07f83fedcd36d2115ac7a3fcec661363f603",
+    "CookBook/Models/RecipeSeeder.swift": "309540e6a0465bbfc58ac7ab03802f6f4acf1c84a226cb34fa89b408cafb3d9b",
+    "CookBook/Services/BundledRecipeMedia.swift": "bab3d82a8bff571820c06eb37569958afacc4360edf861d3305f8475a724ed29",
+    "CookBook/Services/MediaImporter.swift": "d3ed1d2ec8896f0e760d09e6f91a22712d4376419933d42006d3784cd76ba2d7",
+    "CookBook/Services/MediaPlaybackSession.swift": "036e801ab7e1bcc48c146e1e2d8b02de6308611f6995ae153358b653a37635b5",
+    "CookBook/Services/RecipePersistence.swift": "f0e9406e9e9d77eb0d631a01befef14b03a450daad3d846fad30bddaba459fd5",
+    "CookBook/Views/CookingView.swift": "8495b2a84828db79859b927707916c960309cfb676f09a4acf667978f52ff4fb",
+    "CookBook/Views/FavoritesView.swift": "7e90b6ff48c508efaa586e310cecd82df3a54ddd974dc0b18a77bc7482e8b245",
+    "CookBook/Views/HomeView.swift": "1cc9830678efe506fec66fc22dd27de10485a3491466254854a53620cad19bc9",
+    "CookBook/Views/MediaPlayerView.swift": "f20b5b9ce75163921416e956062e44d71ac73b4b19671680a354e97d8bebb2b8",
+    "CookBook/Views/RecipeDetailView.swift": "486b7894959063d67867a59f5d4ba45c70564dfec85d21d928dcdeb1c2887fbe",
+    "CookBook/Views/RecipeFormView.swift": "da5fc78567f965ba09c34cf3a84a5ba87c9ac4c059d4c7c21f1b5c8233b97a36",
+    "CookBook/Views/SearchView.swift": "95abe22781e82b2d88978857b8c2080f62c41058f769347491649453d2ce2417",
+    "CookBook/Views/SettingsView.swift": "0c505b68c998e54604aa634e7defe4ff3294fc40cfc81378ff89430ec476f2ad",
+    "CookBookTests/MediaPlaybackTests.swift": "b81111d7e1a868f054f8644049bc30362dd81e916ffe5b7fc9e19e2a4796f2ab",
+    "CookBookTests/RecipeLogicTests.swift": "005472de82492db93d43c5c43b8f046265dbd32db0faa8f30e3c3be0e5820ad3",
+    "CookBookTests/RecipePersistenceTests.swift": "e901fda129e3bf2d4173b355e97da8ab76e6b393c1836092ea3a0098b12f0c45",
+    "CookBookUITests/RecipeFlowUITests.swift": "2e65cb73eea46fe89445d837f5da7cfe54a9b65e352c0ba8b1d889513c374f8c"
+  }
+}
