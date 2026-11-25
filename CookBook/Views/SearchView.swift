@@ -22,7 +22,7 @@ struct SearchView: View {
                             FilterChip(title: "Do 30 min", isSelected: filter.time == .thirty, prominent: true) {
                                 filter.time = filter.time == .thirty ? .any : .thirty
                             }
-                            FilterChip(title: "Łatwe", isSelected: filter.difficulty == .easy) {
+                            FilterChip(title: "Łatwe", isSelected: filter.difficulty == .easy, prominent: true) {
                                 filter.difficulty = filter.difficulty == .easy ? nil : .easy
                             }
                         }
@@ -98,9 +98,9 @@ struct FilterSheet: View {
                 Section("Poziom trudności") {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
-                            FilterChip(title: "Dowolny", isSelected: draft.difficulty == nil) { draft.difficulty = nil }
+                            FilterChip(title: "Dowolny", isSelected: draft.difficulty == nil, prominent: true) { draft.difficulty = nil }
                             ForEach(Difficulty.allCases) { difficulty in
-                                FilterChip(title: difficulty.rawValue, isSelected: draft.difficulty == difficulty) {
+                                FilterChip(title: difficulty.rawValue, isSelected: draft.difficulty == difficulty, prominent: true) {
                                     draft.difficulty = difficulty
                                 }
                             }
@@ -113,7 +113,7 @@ struct FilterSheet: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
                             ForEach(Diet.allCases) { diet in
-                                FilterChip(title: diet.rawValue, isSelected: draft.diet == diet) {
+                                FilterChip(title: diet.rawValue, isSelected: draft.diet == diet, prominent: true) {
                                     draft.diet = diet
                                 }
                             }
