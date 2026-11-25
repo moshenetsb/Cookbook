@@ -74,15 +74,10 @@ struct FavoritesView: View {
                         ContentUnavailableView(
                             favorites.isEmpty ? "Brak ulubionych" : "Brak pasujących przepisów",
                             systemImage: "heart",
-                            description: Text(favorites.isEmpty ? "Dotknij serca przy wybranym przepisie." : "Zmień wyszukiwanie lub wybrany filtr.")
+                            description: Text(favorites.isEmpty ? "Dotknij serca przy wybranym przepisie" : "Zmień wyszukiwanie lub wybrany filtr")
                         )
                         .listRowSeparator(.hidden)
                     }
-                    Text("Wskazówka: zapisuj przepisy ikoną serca.")
-                        .font(.caption).padding(10)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
-                        .listRowSeparator(.hidden)
                 }
             }
             .listStyle(.plain)

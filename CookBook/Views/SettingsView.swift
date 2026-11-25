@@ -19,7 +19,12 @@ struct SettingsView: View {
                     .padding(.vertical, 6)
                 }
                 Section {
-                    LabeledContent("Przepisy i ulubione", value: "Na tym urządzeniu")
+                    LabeledContent {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(AppTheme.green)
+                    } label: {
+                        Text("Na tym urządzeniu")
+                    }
                     LabeledContent("iCloud", value: "Niedostępne")
                 } header: {
                     Text("Przechowywanie danych")
